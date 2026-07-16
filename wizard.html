@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мастер подбора ноутбука под Linux — LinHardware</title>
+    <style>
+        /* === ДИЗАЙН-СИСТЕМА LINHARDWARE === */
+        :root {
+            --primary-color: #6366f1;       /* Indigo */
+            --primary-hover: #4f46e5;
+            --success-color: #10b981;       /* Зеленый */
+            --warning-color: #f59e0b;       /* Оранжевый */
+            --danger-color: #ef4444;        /* Красный */
+            --dark-bg: #0b0f19;
+            --light-bg: #0f172a;
+            --card-bg: #1e293b;
+            --card-hover: #2d3748;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --radius: 16px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* === HEADER === */
+        .site-header {
+            background-color: var(--dark-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        /* === ИНДИКАТОР ПРОГРЕССА === */
+        .wizard-progress {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+        }
+        .wizard-progress::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--border-color);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+        .progress-line-fill {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--primary-color);
+            z-index: 2;
+            transform: translateY(-50%);
+            transition: width 0.3s ease;
+        }
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-muted);
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+        .progress-step.active {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        }
+        .progress-step.completed {
+            border-color: var(--success-color);
+            background-color: var(--success-color);
+            color: #ffffff;
+        }
+
+        /* === ЭКРАНЫ ШАГОВ === */
+        .wizard-step-panel {
+            display: none;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+        .wizard-step-panel.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+        }
+        .step-desc {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        /* СЕТКА ОПЦИЙ (КАРТОЧКИ ДЛЯ КЛИКА) */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .options-grid.columns-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        @media (max-width: 600px) {
+            .options-grid.columns-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .option-card:hover {
+            border-color: var(--text-muted);
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        .option-card.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+        .option-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* КАСТОМНЫЕ ЧЕКБОКСЫ ДЛЯ ШАГА 3 */
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .checkbox-item:hover {
+            border-color: var(--primary-color);
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+        .checkbox-text h4 {
+            margin: 0;
+            color: #ffffff;
+        }
+        .checkbox-text p {
+            margin: 4px 0 0 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* === КНОПКИ НАВИГАЦИИ === */
+        .wizard-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+        }
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* === ФИНАЛЬНЫЙ РЕЗУЛЬТАТ (ШАГ 4) === */
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .match-badge {
+            align-self: flex-start;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .laptop-result-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+        @media (max-width: 768px) {
+            .laptop-result-card {
+                grid-template-columns: 1fr;
+            }
+        }
+        .result-img-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+            padding: 20px;
+        }
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+        }
+        .result-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        .result-spec-item strong {
+            color: #ffffff;
+        }
+
+        .linux-praise {
+            border-left: 4px solid var(--success-color);
+            padding-left: 15px;
+            margin-top: 15px;
+            background-color: rgba(16, 185, 129, 0.02);
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container header-wrapper">
+        <a href="#" class="logo">Lin<span>Hardware</span></a>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Мастер автоматического подбора v1.0</span>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- Линейка прогресса -->
+    <div class="wizard-progress">
+        <div class="progress-line-fill" id="progressLine"></div>
+        <div class="progress-step active" data-step="1">1</div>
+        <div class="progress-step" data-step="2">2</div>
+        <div class="progress-step" data-step="3">3</div>
+        <div class="progress-step" data-step="4">✓</div>
+    </div>
+
+    <!-- ШАГ 1: ГОТОВНОСТЬ ПИЛИТЬ НАПИЛЬНИКОМ -->
+    <section class="wizard-step-panel active" id="step1">
+        <h2 class="step-title">Насколько вы готовы настраивать систему?</h2>
+        <p class="step-desc">Мы подбираем уровень совместимости железа под ваш комфорт в терминале Linux.</p>
+
+        <div class="options-grid">
+            <div class="option-card selected" onclick="selectOption(this, 'comfort', 'strict')">
+                <div class="option-title">
+                    <span>🐧</span> Из коробки (OOTB)
+                </div>
+                <div class="option-desc">
+                    Вам нужна 100% стабильность. Никакой сборки драйверов из исходников. Всё, от Wi-Fi до веб-камеры, должно работать сразу после установки Ubuntu или Fedora.
+                </div>
+            </div>
+
+            <div class="option-card" onclick="selectOption(this, 'comfort', 'moderate')">
+                <div class="option-title">
+                    <span>🔧</span> Готов немного подкрутить
+                </div>
+                <div class="option-desc">
+                    Вам не трудно прописать параметры загрузчика GRUB, установить проприетарные кодеки или добавить один DKMS модуль для Bluetooth.
+                </div>
+            </div>
+
+            <div class="option-card" onclick="selectOption(this, 'comfort', 'hardcore')">
+                <div class="option-title">
+                    <span>💻</span> Gentoo-way / Я сам все починю
+                </div>
+                <div class="option-desc">
+                    Вас не пугают неработающие спящие режимы, сборка драйверов для тачпада из репозиториев на GitHub или ручная отладка ACPI таблиц. Главное — производительность железа!
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ШАГ 2: ХАРАКТЕРИСТИКИ ЖЕЛЕЗА -->
+    <section class="wizard-step-panel" id="step2">
+        <h2 class="step-title">Что для вас главное в самом железе?</h2>
+        <p class="step-desc">Сбалансируем требования к портативности и вычислительной мощности.</p>
+
+        <div class="options-grid columns-2">
+            <div class="option-card selected" onclick="selectOption(this, 'hardware', 'ultra')">
+                <div class="option-title">Автономность и вес</div>
+                <div class="option-desc">Тонкий ультрабук, долгая батарея, интегрированная графика. Вес до 1.3 кг.</div>
+            </div>
+
+            <div class="option-card" onclick="selectOption(this, 'hardware', 'workstation')">
+                <div class="option-title">Мобильная рабочая станция</div>
+                <div class="option-desc">Мощный процессор AMD Ryzen или Intel Core, 32GB+ RAM. Компиляция кода без перегревов.</div>
+            </div>
+
+            <div class="option-card" onclick="selectOption(this, 'hardware', 'gaming')">
+                <div class="option-title">Игры и 3D Графика</div>
+                <div class="option-desc">Наличие дискретной видеокарты. Максимальная производительность.</div>
+            </div>
+
+            <div class="option-card" onclick="selectOption(this, 'hardware', 'budget')">
+                <div class="option-title">Практичный бюджетник</div>
+                <div class="option-desc">Оптимальное соотношение цены и качества. Легкий апгрейд диска и памяти вручную.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ШАГ 3: ЛИНУКСОВЫЕ ДЕТАЛИ -->
+    <section class="wizard-step-panel" id="step3">
+        <h2 class="step-title">Линуксовые ограничения (Dealbreakers)</h2>
+        <p class="step-desc">Укажите то, что для вас является критически важным при работе в Linux.</p>
+
+        <div class="options-grid" style="gap: 15px;">
+            <label class="checkbox-item">
+                <input type="checkbox" id="noNvidia" checked>
+                <div class="checkbox-text">
+                    <h4>Никакого Nvidia-проприетара (Только AMD / Intel)</h4>
+                    <p>Исключить дискретные карты Nvidia, чтобы избежать возни со слиянием драйверов Wayland и черных экранов.</p>
+                </div>
+            </label>
+
+            <label class="checkbox-item">
+                <input type="checkbox" id="intelWifi">
+                <div class="checkbox-text">
+                    <h4>Строго Intel Wi-Fi чипсет</h4>
+                    <p>Гарантирует отсутствие падения сети и стабильную работу Bluetooth без проприетарного блоба Realtek/Broadcom.</p>
+                </div>
+            </label>
+
+            <label class="checkbox-item">
+                <input type="checkbox" id="s3sleep">
+                <div class="checkbox-text">
+                    <h4>Поддержка глубокого сна S3 (вместо s2idle)</h4>
+                    <p>Ноутбук не должен разряжаться в рюкзаке. Требуется честная поддержка режима ACPI Suspend-to-RAM.</p>
+                </div>
+            </label>
+        </div>
+    </section>
+
+    <!-- ШАГ 4: РЕЗУЛЬТАТЫ -->
+    <section class="wizard-step-panel" id="step4">
+        <h2 class="step-title">Идеальное совпадение найдено!</h2>
+        <p class="step-desc">Мы сопоставили ваши пожелания с базой ядра и логами dmesg.</p>
+
+        <div class="result-container">
+            <div class="laptop-result-card">
+                <div class="result-img-box">
+                    <!-- Набросок силуэта ноута -->
+                    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="1.5">
+                        <rect x="4" y="4" width="16" height="11" rx="1.5" />
+                        <path d="M2 19 h20" />
+                        <path d="M4 15 L2 19 M20 15 L22 19" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="match-badge">98% Совместимость (Platinum)</div>
+                    <h3 class="result-title" id="resultName">Zenith X1 Pro</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">Рекомендуемый дистрибутив: <strong>Fedora Workstation / Arch Linux (Kernel 6.11+)</strong></p>
+
+                    <div class="result-specs">
+                        <div class="result-spec-item">Экран: <strong>14.0" OLED 120Hz</strong></div>
+                        <div class="result-spec-item">CPU: <strong>AMD Ryzen 7 8840U</strong></div>
+                        <div class="result-spec-item">Wi-Fi: <strong>Intel BE200 (OOTB)</strong></div>
+                        <div class="result-spec-item">Вес: <strong>1.28 кг</strong></div>
+                    </div>
+
+                    <div class="linux-praise">
+                        <span style="font-weight: 700; color: var(--success-color);">Почему он:</span>
+                        Полностью свободные драйверы. Видеоядро Radeon работает идеально на Wayland, а Wi-Fi модуль не требует внешней прошивки. Сон отрабатывает без нареканий.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- КНОПКИ УПРАВЛЕНИЯ -->
+    <div class="wizard-navigation">
+        <button class="btn btn-secondary" id="btnPrev" onclick="navigateStep(-1)" disabled>Назад</button>
+        <button class="btn btn-primary" id="btnNext" onclick="navigateStep(1)">Далее</button>
+    </div>
+
+</main>
+
+<footer style="margin-top: auto; border-top: 1px solid var(--border-color); padding: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+    LinHardware Selection Engine, 2026. Парсинг коммитов ядра выполняется в реальном времени.
+</footer>
+
+<!-- Простая логика переключения шагов -->
+<script>
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function navigateStep(direction) {
+        // Скрываем текущий
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+
+        currentStep += direction;
+        if (currentStep < 1) currentStep = 1;
+        if (currentStep > totalSteps) currentStep = totalSteps;
+
+        // Показываем новый шаг
+        document.getElementById(`step${currentStep}`).classList.add('active');
+
+        // Обновляем кнопки управления
+        document.getElementById('btnPrev').disabled = (currentStep === 1);
+
+        if (currentStep === totalSteps) {
+            document.getElementById('btnNext').innerText = 'Начать заново';
+            calculateResult();
+        } else {
+            document.getElementById('btnNext').innerText = 'Далее';
+        }
+
+        // Обновляем прогресс-бар
+        updateProgress();
+    }
+
+    function updateProgress() {
+        // Линия
+        const percent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+        document.getElementById('progressLine').style.width = percent + '%';
+
+        // Кружки
+        document.querySelectorAll('.progress-step').forEach(step => {
+            const stepNum = parseInt(step.getAttribute('data-step'));
+            step.classList.remove('active', 'completed');
+
+            if (stepNum === currentStep) {
+                step.classList.add('active');
+            } else if (stepNum < currentStep) {
+                step.classList.add('completed');
+            }
+        });
+    }
+
+    function selectOption(element, category, value) {
+        // Снятие выделения с остальных карточек в текущей группе
+        const parent = element.parentElement;
+        parent.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    function calculateResult() {
+        // Пример простейшей реактивности подбора на основе чекбоксов
+        const noNvidia = document.getElementById('noNvidia').checked;
+        const s3sleep = document.getElementById('s3sleep').checked;
+        const resultName = document.getElementById('resultName');
+
+        if (noNvidia && s3sleep) {
+            resultName.innerText = "Zenith X1 Pro (AMD Edition)";
+        } else if (!noNvidia) {
+            resultName.innerText = "Tuxedo Stellaris 16 (Nvidia RTX)";
+        } else {
+            resultName.innerText = "AeroBook 14 Carbon (Intel Core Ultra)";
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinCheck — Проверка совместимости ноутбуков с Linux</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Google Fonts (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-400">
+
+<!-- Навигация -->
+<header class="border-b border-zinc-800/80 bg-zinc-950/50 backdrop-blur sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-black text-lg">L</div>
+      <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">LinCheck</span>
+    </div>
+    <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-zinc-400">
+      <a href="catalog.html" class="text-white hover:text-emerald-400 transition">Каталог</a>
+      <a href="#" class="hover:text-emerald-400 transition">Подбор ноутбука</a>
+      <a href="#" class="hover:text-emerald-400 transition">Сравнение</a>
+    </nav>
+    <div>
+      <a href="#" class="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm font-medium hover:bg-zinc-800 transition">Войти через GitHub</a>
+    </div>
+  </div>
+</header>
+
+<!-- Главный экран (Hero Section) -->
+<main class="flex-grow flex flex-col items-center justify-center px-4 py-20 text-center max-w-4xl mx-auto">
+
+  <!-- Тег сверху -->
+  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-6 animate-pulse">
+            База данных обновлена сегодня
+        </span>
+
+  <!-- Заголовок -->
+  <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">
+    Встанет ли Linux на твой ноутбук без боли?
+  </h1>
+
+  <!-- Подзаголовок -->
+  <p class="text-lg sm:text-xl text-zinc-400 max-w-2xl mb-12 font-light leading-relaxed">
+    Хватит копаться в старых форумах. Проверь совместимость железа по чистой инженерной телеметрии в один клик.
+  </p>
+
+  <!-- Кнопки действия -->
+  <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full justify-center mb-16">
+    <a href="#" class="px-8 py-4 bg-emerald-500 text-zinc-950 font-semibold rounded-xl shadow-lg shadow-emerald-500/20 hover:bg-emerald-400 transition flex items-center justify-center space-x-2">
+      <span>Перейти в каталог</span>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </a>
+    <a href="#quick-check" class="px-8 py-4 bg-zinc-900 border border-zinc-800 text-zinc-200 font-medium rounded-xl hover:bg-zinc-800 transition">
+      Быстрый тест моего ПК
+    </a>
+  </div>
+
+  <!-- Виджет терминала (Быстрый чек) -->
+  <div id="quick-check" class="w-full max-w-2xl bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-6 text-left shadow-2xl backdrop-blur-sm">
+    <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 rounded-full bg-red-500/40"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-500/40"></div>
+        <div class="w-3 h-3 rounded-full bg-green-500/40"></div>
+        <span class="text-xs text-zinc-500 font-medium pl-2 mono">live-compatibility-check.sh</span>
+      </div>
+      <span class="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Terminal</span>
+    </div>
+    <p class="text-sm text-zinc-400 mb-3 font-light">Скопируй и запусти эту команду в терминале для мгновенного анализа системы:</p>
+    <div class="bg-zinc-950 border border-zinc-800/60 rounded-xl p-4 flex items-center justify-between group">
+      <code class="mono text-emerald-400 text-sm sm:text-base break-all select-all">
+        curl -sL https://api.lincheck.dev/check | sh
+      </code>
+      <button class="ml-4 p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white rounded-lg transition" title="Скопировать">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<!-- Подвал (Footer) -->
+<footer class="border-t border-zinc-900 bg-zinc-950 py-8 text-center text-xs text-zinc-600">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+    <div>
+      © 2026 LinCheck. Все права защищены.
+    </div>
+    <div class="flex items-center space-x-2 text-zinc-500">
+      <span>Powered by</span>
+      <a href="https://linux-hardware.org/" target="_blank" class="text-zinc-400 hover:text-emerald-400 underline decoration-zinc-700 transition">linux-hardware.org</a>
+      <span>Open Data (CC-BY 4.0)</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сравнение ноутбуков: Zenith X1 Pro vs AeroBook 14 — LinHardware</title>
+    <style>
+        /* === ПЕРЕМЕННЫЕ ДИЗАЙН-СИСТЕМЫ === */
+        :root {
+            --primary-color: #6366f1;       /* Indigo */
+            --primary-hover: #4f46e5;
+            --success-color: #10b981;       /* Зеленый (Отлично) */
+            --warning-color: #f59e0b;       /* Оранжевый (С оговорками) */
+            --danger-color: #ef4444;        /* Красный (Проблемы) */
+            --dark-bg: #0b0f19;
+            --light-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --radius: 12px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* === HEADER === */
+        .site-header {
+            background-color: var(--dark-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span {
+            color: var(--primary-color);
+        }
+        .main-nav {
+            display: flex;
+            gap: 24px;
+        }
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff;
+        }
+
+        /* === СЕКЦИЯ СРАВНЕНИЯ === */
+        .page-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 40px 0 10px 0;
+            text-align: center;
+        }
+        .page-subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* КАРТОЧКИ БЫСТРОГО СРАВНЕНИЯ */
+        .compare-header-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .compare-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .compare-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+        }
+        .compare-card.best::before {
+            background-color: var(--success-color);
+        }
+        .compare-card.average::before {
+            background-color: var(--warning-color);
+        }
+        .model-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+        }
+        .score-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .score-pill {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+        .score-pill strong {
+            color: #ffffff;
+        }
+        .score-pill.green-text strong {
+            color: var(--success-color);
+        }
+        .score-pill.orange-text strong {
+            color: var(--warning-color);
+        }
+
+        /* === ТАБЛИЦЫ СРАВНЕНИЯ === */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 40px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title span {
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .compare-table-wrapper {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .compare-table th {
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 18px 20px;
+            font-size: 1rem;
+            color: #ffffff;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .compare-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+            width: 40%;
+        }
+        .compare-table td.row-label {
+            width: 20%;
+            font-weight: 700;
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.01);
+            border-right: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Компоненты внутри ячеек */
+        .spec-value {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        .spec-subtext {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .driver-pill {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #a5f3fc;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Статусы */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+        .status-badge.ok {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--success-color);
+        }
+        .status-badge.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: var(--warning-color);
+        }
+        .status-badge.error {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: var(--danger-color);
+        }
+
+        /* === FOOTER === */
+        .site-footer {
+            background-color: var(--dark-bg);
+            color: var(--text-muted);
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 992px) {
+            .compare-header-grid {
+                grid-template-columns: 1fr;
+            }
+            .compare-table td, .compare-table th {
+                padding: 12px;
+            }
+            .compare-table td.row-label {
+                width: 30%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ШАПКА ПОРТАЛА -->
+<header class="site-header">
+    <div class="container header-wrapper">
+        <a href="#" class="logo">Lin<span>Hardware</span></a>
+        <nav class="main-nav">
+            <a href="#" class="nav-link">База устройств</a>
+            <a href="#" class="nav-link active">Сравнение</a>
+            <a href="#" class="nav-link">База PCI ID</a>
+            <a href="#" class="nav-link">Отчеты</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+
+    <h1 class="page-title">Сравнение ноутбуков</h1>
+    <p class="page-subtitle">Комплексный анализ физических характеристик и аппаратной совместимости с Linux</p>
+
+    <!-- КАРТОЧКИ БЫСТРОЙ СВОДКИ -->
+    <section class="compare-header-grid">
+        <div class="compare-card best">
+            <div>
+                <div class="model-name">Zenith X1 Pro</div>
+                <div class="score-row">
+                    <div class="score-pill green-text">Совместимость: <strong>98%</strong></div>
+                    <div class="score-pill">Минимум ядра: <strong>6.8+</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-card average">
+            <div>
+                <div class="model-name">AeroBook 14 Carbon</div>
+                <div class="score-row">
+                    <div class="score-pill orange-text">Совместимость: <strong>74%</strong></div>
+                    <div class="score-pill">Минимум ядра: <strong>6.11+</strong></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- РАЗДЕЛ 1: ЧИСТЫЕ ХАРАКТЕРИСТИКИ -->
+    <h2 class="section-title"><span>Железо</span> Сравнение характеристик</h2>
+    <div class="compare-table-wrapper">
+        <table class="compare-table">
+            <thead>
+            <tr>
+                <th class="row-label" style="background-color: transparent;">Характеристика</th>
+                <th>Zenith X1 Pro</th>
+                <th>AeroBook 14 Carbon</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="row-label">Процессор (CPU)</td>
+                <td>
+                    <div class="spec-value">Intel Core Ultra 7 155H</div>
+                    <div class="spec-subtext">16 ядер (6P + 8E + 2LPE) / 22 потока / частота до 4.8 GHz / TDP 28W</div>
+                </td>
+                <td>
+                    <div class="spec-value">AMD Ryzen 7 8840U</div>
+                    <div class="spec-subtext">8 ядер (Zen 4) / 16 потоков / частота до 5.1 GHz / TDP 28W</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Экран</td>
+                <td>
+                    <div class="spec-value">14.0" OLED (2.8K)</div>
+                    <div class="spec-subtext">Разрешение 2880x1800, 16:10, частота 120Hz, яркость 500 нит (HDR), глянцевый</div>
+                </td>
+                <td>
+                    <div class="spec-value">14.0" IPS (FullHD+)</div>
+                    <div class="spec-subtext">Разрешение 1920x1200, 16:10, частота 60Hz, яркость 300 нит, матовый</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Память (RAM)</td>
+                <td>
+                    <div class="spec-value">32 GB LPDDR5X</div>
+                    <div class="spec-subtext">Частота 6400 MT/s, распаяна, двухканальный режим</div>
+                </td>
+                <td>
+                    <div class="spec-value">16 GB LPDDR5</div>
+                    <div class="spec-subtext">Частота 4800 MT/s, распаяна, двухканальный режим</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Накопитель (SSD)</td>
+                <td>
+                    <div class="spec-value">1 TB PCIe Gen4 x4 NVMe</div>
+                    <div class="spec-subtext">Samsung PM9A1, чтение до 7100 MB/s, форм-фактор M.2 2280</div>
+                </td>
+                <td>
+                    <div class="spec-value">512 GB PCIe Gen4 x4 NVMe</div>
+                    <div class="spec-subtext">OEM-накопитель, чтение до 4200 MB/s, форм-фактор M.2 2280</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Батарея и Вес</td>
+                <td>
+                    <div class="spec-value">75 Wh / 1.38 кг</div>
+                    <div class="spec-subtext">Литий-полимерная, быстрая зарядка USB-C 100W</div>
+                </td>
+                <td>
+                    <div class="spec-value">58 Wh / 1.25 кг</div>
+                    <div class="spec-subtext">Литий-ионная, зарядка USB-C 65W</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Порты</td>
+                <td>
+                    <div class="spec-value">Богатый набор периферии</div>
+                    <div class="spec-subtext">2x Thunderbolt 4 (Type-C), 1x USB 3.2 Gen 2 (Type-A), 1x HDMI 2.1, Jack 3.5mm</div>
+                </td>
+                <td>
+                    <div class="spec-value">Минимум разъемов</div>
+                    <div class="spec-subtext">2x USB-C (с поддержкой DP), 1x USB 3.0 (Type-A), Jack 3.5mm</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- РАЗДЕЛ 2: ЛИНУКС СОВМЕСТИМОСТЬ -->
+    <h2 class="section-title"><span>Софт / Ядро</span> Linux-совместимость и Драйверы</h2>
+    <div class="compare-table-wrapper">
+        <table class="compare-table">
+            <thead>
+            <tr>
+                <th class="row-label" style="background-color: transparent;">Подсистема</th>
+                <th>Zenith X1 Pro</th>
+                <th>AeroBook 14 Carbon</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="row-label">Ядро и CPU-драйвер</td>
+                <td>
+                    <div class="spec-value">Идеальная поддержка</div>
+                    <div class="spec-subtext">
+                        Драйвер <span class="driver-info">intel_pstate</span> корректно управляет энергопотреблением. Планировщик ядер работает из коробки.
+                    </div>
+                    <span class="status-badge ok">Полная совместимость</span>
+                </td>
+                <td>
+                    <div class="spec-value">Хорошо (на свежих ядрах)</div>
+                    <div class="spec-subtext">
+                        Драйвер <span class="driver-info">amd-pstate-epp</span> поддерживается начиная с ядра 6.7+. На старых дистрибутивах (Debian 12) может греться в простое.
+                    </div>
+                    <span class="status-badge ok">Полная совместимость</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Графический стек</td>
+                <td>
+                    <div class="spec-value">Intel Arc Graphics</div>
+                    <span class="driver-pill">xe / i915</span>
+                    <div class="spec-subtext" style="margin-top: 6px;">
+                        Полная интеграция с Wayland. Аппаратное декодирование VP9/AV1 работает без дополнительных настроек.
+                    </div>
+                    <span class="status-badge ok">Без костылей</span>
+                </td>
+                <td>
+                    <div class="spec-value">Radeon 780M</div>
+                    <span class="driver-pill">amdgpu</span>
+                    <div class="spec-subtext" style="margin-top: 6px;">
+                        Высокая 3D-производительность. Но в связке с IPS матрицей иногда возникает мерцание при активации режима энергосбережения Panel Self Refresh (PSR).
+                    </div>
+                    <span class="status-badge warning">Нужен твик в GRUB</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Беспроводная сеть</td>
+                <td>
+                    <div class="spec-value">Intel BE200 (Wi-Fi 7)</div>
+                    <span class="driver-pill">iwlwifi</span>
+                    <div class="spec-subtext" style="margin-top: 6px;">
+                        Драйвер включен в апстрим ядра. Скорость соединения и стабильность Bluetooth идеальные.
+                    </div>
+                    <span class="status-badge ok">OOTB (Из коробки)</span>
+                </td>
+                <td>
+                    <div class="spec-value">Realtek RTL8852CE</div>
+                    <span class="driver-pill">rtw89_8852ce</span>
+                    <div class="spec-subtext" style="margin-top: 6px;">
+                        Поддержка добавлена недавно. Известная проблема: потеря пакетов и высокий пинг при активной передаче файлов по Bluetooth.
+                    </div>
+                    <span class="status-badge warning">Нестабильная работа</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Звук (Аудиокарта)</td>
+                <td>
+                    <div class="spec-value">Intel Sound Open Firmware</div>
+                    <span class="driver-pill">snd_sof_pci_intel_tgl</span>
+                    <div class="spec-subtext" style="margin-top: 6px;">
+                        PipeWire автоматически подхватывает конфигурацию динамиков и микрофона. Звук объемный.
+                    </div>
+                    <span class="status-badge ok">Работает всё</span>
+                </td>
+                <td>
+                    <div class="spec-value">Everest ES8336 Codec</div>
+                    <span class="driver-pill">snd_soc_es8336</span>
+                    <div class="spec-subtext" style="margin-top: 6px;">
+                        Звук по умолчанию молчит. Требуется вручную скачивать UCM2-конфигурации под PipeWire/ALSA и прописывать опции драйвера.
+                    </div>
+                    <span class="status-badge error">Требует доработки</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Спящий режим (Suspend)</td>
+                <td>
+                    <div class="spec-value">Глубокий сон S3 / s2idle</div>
+                    <div class="spec-subtext">
+                        Корректно засыпает и просыпается при закрытии крышки. Потеря заряда: ~0.2% в час.
+                    </div>
+                    <span class="status-badge ok">Отлично</span>
+                </td>
+                <td>
+                    <div class="spec-value">Только s2idle (Modern Standby)</div>
+                    <div class="spec-subtext">
+                        Классический S3 вырезан из ACPI BIOS. Ноутбук часто просыпается в рюкзаке из-за багов ACPI событий. Расход: ~1.2% в час.
+                    </div>
+                    <span class="status-badge warning">Жор батареи в сне</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<!-- ПОДВАЛ ПОРТАЛА -->
+<footer class="site-footer">
+    <div class="container">
+        <p>© 2026 LinHardware Database. Анализ составлен на основе реальных тестов ядра Linux 6.11+.</p>
+    </div>
+</footer>
+
+</body>
+</html>
