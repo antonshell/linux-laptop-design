@@ -6,7 +6,7 @@ Main idea of project - create catalog of laptops, compatible with linux
 
 # Demo 
 
-![schema](img/schema.png)
+![demo](img/demo.png)
 
 # Flow
 
