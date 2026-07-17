@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас — LinCheck</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-400">
+
+<!-- Навигация -->
+<header class="border-b border-zinc-800/80 bg-zinc-950/50 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-black text-lg transition group-hover:bg-emerald-400">L</div>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">LinCheck</span>
+            </a>
+        </div>
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-zinc-400">
+            <a href="catalog.html" class="hover:text-emerald-400 transition">Каталог</a>
+            <a href="wizard.html" class="hover:text-emerald-400 transition">Подбор ноутбука</a>
+            <a href="compare.html" class="hover:text-emerald-400 transition">Сравнение</a>
+            <a href="about.html" class="text-white hover:text-emerald-400 transition">О нас</a>
+            <a href="contacts.html" class="hover:text-emerald-400 transition">Контакты</a>
+        </nav>
+        <div>
+            <a href="#" class="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm font-medium hover:bg-zinc-800 transition">Войти через GitHub</a>
+        </div>
+    </div>
+</header>
+
+<!-- Контент «О нас» -->
+<main class="flex-grow max-w-4xl mx-auto px-4 py-16 w-full">
+
+    <!-- Заголовок -->
+    <div class="text-center mb-16">
+    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
+      О проекте
+    </span>
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">
+            Инженерный подход к совместимости
+        </h1>
+        <p class="text-lg text-zinc-400 font-light max-w-2xl mx-auto">
+            Мы создали LinCheck, чтобы избавить Linux-сообщество от гадания по логам и бесконечного поиска «почему не работает Wi-Fi».
+        </p>
+    </div>
+
+    <!-- Статистика -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        <div class="p-6 bg-zinc-900/40 border border-zinc-900 rounded-2xl text-center">
+            <div class="text-3xl font-extrabold text-emerald-400 mb-1 mono">45K+</div>
+            <div class="text-xs text-zinc-500 font-medium uppercase tracking-wider">Проверок ПК</div>
+        </div>
+        <div class="p-6 bg-zinc-900/40 border border-zinc-900 rounded-2xl text-center">
+            <div class="text-3xl font-extrabold text-white mb-1 mono">1,200+</div>
+            <div class="text-xs text-zinc-500 font-medium uppercase tracking-wider">Ноутбуков в базе</div>
+        </div>
+        <div class="p-6 bg-zinc-900/40 border border-zinc-900 rounded-2xl text-center">
+            <div class="text-3xl font-extrabold text-white mb-1 mono">99.4%</div>
+            <div class="text-xs text-zinc-500 font-medium uppercase tracking-wider">Точность дампов</div>
+        </div>
+        <div class="p-6 bg-zinc-900/40 border border-zinc-900 rounded-2xl text-center">
+            <div class="text-3xl font-extrabold text-emerald-400 mb-1 mono">100%</div>
+            <div class="text-xs text-zinc-500 font-medium uppercase tracking-wider">Open Source</div>
+        </div>
+    </div>
+
+    <!-- Блок с текстом / Миссия -->
+    <div class="space-y-12 text-zinc-300 font-light leading-relaxed text-base">
+        <div class="border-l-2 border-emerald-500 pl-6 space-y-3">
+            <h2 class="text-xl font-semibold text-white tracking-tight font-sans">Наша цель — предсказуемый десктопный Linux</h2>
+            <p>
+                Большинство таблиц совместимости в интернете заполняются вручную и быстро устаревают. Один человек пишет «всё работает», забывая упомянуть, что для этого пришлось пересобирать ядро и отключать Bluetooth. LinCheck работает иначе: мы собираем чистые аппаратные логи (`lspci`, `lsusb`, дампы ACPI) и сопоставляем их с реальными отчетами об ошибках.
+            </p>
+        </div>
+
+        <div class="bg-zinc-900/30 border border-zinc-800/60 rounded-2xl p-8 space-y-4">
+            <h3 class="text-lg font-semibold text-white">Как это работает под капотом?</h3>
+            <p class="text-sm text-zinc-400">
+                Проект работает в тесной связке и использует массив открытых данных крупнейшей базы <a href="https://linux-hardware.org/" class="text-emerald-400 hover:underline">linux-hardware.org</a>. Скрипт мгновенного анализа считывает PCI-идентификаторы ваших устройств и за несколько секунд сверяет их со стабильными ветками ядер Ubuntu, Fedora, Arch и Debian. Вы получаете четкий вердикт еще до того, как начнете форматировать диск.
+            </p>
+        </div>
+    </div>
+
+</main>
+
+<!-- Подвал (Footer) -->
+<footer class="border-t border-zinc-900 bg-zinc-950 py-8 text-center text-xs text-zinc-600">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+        <div>
+            © 2026 LinCheck. Все права защищены.
+        </div>
+        <div class="flex items-center space-x-2 text-zinc-500">
+            <span>Powered by</span>
+            <a href="https://linux-hardware.org/" target="_blank" class="text-zinc-400 hover:text-emerald-400 underline decoration-zinc-700 transition">linux-hardware.org</a>
+            <span>Open Data (CC-BY 4.0)</span>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
