@@ -14,30 +14,24 @@
 </head>
 <body class="min-h-full flex flex-col justify-between bg-zinc-950 selection:bg-emerald-500/30 selection:text-emerald-400">
 
-<!-- HEADER -->
-<header class="border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-6xl w-full mx-auto px-4 h-16 flex items-center justify-between">
-        <!-- Логотип -->
-        <a href="/" class="flex items-center space-x-2 group">
-            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center group-hover:border-emerald-500 transition">
-                <span class="mono text-emerald-400 text-sm font-bold">LC</span>
-            </div>
-            <span class="font-bold tracking-tight text-white">LinCheck</span>
-        </a>
-
-        <!-- Навигация -->
-        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <a href="/catalog" class="text-zinc-400 hover:text-white transition">Каталог</a>
-            <a href="/selector" class="text-emerald-400 border-b-2 border-emerald-500 py-5 transition">Подбор</a>
-            <a href="/hardware" class="text-zinc-400 hover:text-white transition">Компоненты</a>
-            <a href="/community" class="text-zinc-400 hover:text-white transition">Сообщество</a>
-        </nav>
-
-        <!-- Кнопка действия -->
-        <div class="flex items-center space-x-4">
-            <a href="/hcl-report" class="mono text-xs border border-zinc-800 bg-zinc-900/50 hover:border-zinc-700 px-3 py-1.5 rounded-lg text-zinc-300 hover:text-white transition">
-                + Добавить репорт
+<!-- Навигация -->
+<header class="border-b border-zinc-800/80 bg-zinc-950/50 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-black text-lg transition group-hover:bg-emerald-400">L</div>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">LinCheck</span>
             </a>
+        </div>
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-zinc-400">
+            <a href="catalog.html" class="hover:text-emerald-400 transition">Каталог</a>
+            <a href="wizard.html" class="text-white hover:text-emerald-400 transition">Подбор ноутбука</a>
+            <a href="compare.html" class="hover:text-emerald-400 transition">Сравнение</a>
+            <a href="about.html" class="hover:text-emerald-400 transition">О нас</a>
+            <a href="contact.html" class="hover:text-emerald-400 transition">Контакты</a>
+        </nav>
+        <div>
+            <a href="#" class="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm font-medium hover:bg-zinc-800 transition">Войти через GitHub</a>
         </div>
     </div>
 </header>
