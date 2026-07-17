@@ -1,570 +1,312 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="h-full bg-zinc-950 text-zinc-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мастер подбора ноутбука под Linux — LinHardware</title>
+    <title>Интерактивный подбор ноутбука для Linux — LinCheck</title>
+    <!-- Подключаем Tailwind Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* === ДИЗАЙН-СИСТЕМА LINHARDWARE === */
-        :root {
-            --primary-color: #6366f1;       /* Indigo */
-            --primary-hover: #4f46e5;
-            --success-color: #10b981;       /* Зеленый */
-            --warning-color: #f59e0b;       /* Оранжевый */
-            --danger-color: #ef4444;        /* Красный */
-            --dark-bg: #0b0f19;
-            --light-bg: #0f172a;
-            --card-bg: #1e293b;
-            --card-hover: #2d3748;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --radius: 16px;
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: var(--text-main);
-            background-color: var(--light-bg);
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        /* === HEADER === */
-        .site-header {
-            background-color: var(--dark-bg);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .header-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #ffffff;
-            text-decoration: none;
-        }
-        .logo span {
-            color: var(--primary-color);
-        }
-
-        /* === ИНДИКАТОР ПРОГРЕССА === */
-        .wizard-progress {
-            display: flex;
-            justify-content: space-between;
-            margin: 40px 0;
-            position: relative;
-        }
-        .wizard-progress::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--border-color);
-            z-index: 1;
-            transform: translateY(-50%);
-        }
-        .progress-line-fill {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background-color: var(--primary-color);
-            z-index: 2;
-            transform: translateY(-50%);
-            transition: width 0.3s ease;
-        }
-        .progress-step {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            border: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--text-muted);
-            z-index: 3;
-            transition: all 0.3s ease;
-        }
-        .progress-step.active {
-            border-color: var(--primary-color);
-            background-color: var(--primary-color);
-            color: #ffffff;
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
-        }
-        .progress-step.completed {
-            border-color: var(--success-color);
-            background-color: var(--success-color);
-            color: #ffffff;
-        }
-
-        /* === ЭКРАНЫ ШАГОВ === */
-        .wizard-step-panel {
-            display: none;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
-        }
-        .wizard-step-panel.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .step-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin: 0 0 10px 0;
-        }
-        .step-desc {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
-
-        /* СЕТКА ОПЦИЙ (КАРТОЧКИ ДЛЯ КЛИКА) */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        .options-grid.columns-2 {
-            grid-template-columns: 1fr 1fr;
-        }
-        @media (max-width: 600px) {
-            .options-grid.columns-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .option-card {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 24px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        .option-card:hover {
-            border-color: var(--text-muted);
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-        .option-card.selected {
-            border-color: var(--primary-color);
-            background-color: rgba(99, 102, 241, 0.05);
-        }
-        .option-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .option-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* КАСТОМНЫЕ ЧЕКБОКСЫ ДЛЯ ШАГА 3 */
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .checkbox-item:hover {
-            border-color: var(--primary-color);
-        }
-        .checkbox-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary-color);
-            cursor: pointer;
-        }
-        .checkbox-text h4 {
-            margin: 0;
-            color: #ffffff;
-        }
-        .checkbox-text p {
-            margin: 4px 0 0 0;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* === КНОПКИ НАВИГАЦИИ === */
-        .wizard-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 60px;
-        }
-        .btn {
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-        }
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-        }
-        .btn-secondary:hover {
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: #ffffff;
-        }
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-        }
-        .btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        /* === ФИНАЛЬНЫЙ РЕЗУЛЬТАТ (ШАГ 4) === */
-        .result-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        .match-badge {
-            align-self: flex-start;
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .laptop-result-card {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 30px;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 30px;
-        }
-        @media (max-width: 768px) {
-            .laptop-result-card {
-                grid-template-columns: 1fr;
-            }
-        }
-        .result-img-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
-            border: 1px dashed var(--border-color);
-            padding: 20px;
-        }
-        .result-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin: 0 0 10px 0;
-        }
-        .result-specs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 20px 0;
-            font-size: 0.9rem;
-        }
-        .result-spec-item strong {
-            color: #ffffff;
-        }
-
-        .linux-praise {
-            border-left: 4px solid var(--success-color);
-            padding-left: 15px;
-            margin-top: 15px;
-            background-color: rgba(16, 185, 129, 0.02);
-            padding: 12px;
-            border-radius: 0 8px 8px 0;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
     </style>
 </head>
-<body>
+<body class="min-h-full flex flex-col justify-between bg-zinc-950 selection:bg-emerald-500/30 selection:text-emerald-400">
 
-<header class="site-header">
-    <div class="container header-wrapper">
-        <a href="#" class="logo">Lin<span>Hardware</span></a>
-        <span style="font-size: 0.85rem; color: var(--text-muted);">Мастер автоматического подбора v1.0</span>
+<!-- HEADER -->
+<header class="border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-6xl w-full mx-auto px-4 h-16 flex items-center justify-between">
+        <!-- Логотип -->
+        <a href="/" class="flex items-center space-x-2 group">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center group-hover:border-emerald-500 transition">
+                <span class="mono text-emerald-400 text-sm font-bold">LC</span>
+            </div>
+            <span class="font-bold tracking-tight text-white">LinCheck</span>
+        </a>
+
+        <!-- Навигация -->
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+            <a href="/catalog" class="text-zinc-400 hover:text-white transition">Каталог</a>
+            <a href="/selector" class="text-emerald-400 border-b-2 border-emerald-500 py-5 transition">Подбор</a>
+            <a href="/hardware" class="text-zinc-400 hover:text-white transition">Компоненты</a>
+            <a href="/community" class="text-zinc-400 hover:text-white transition">Сообщество</a>
+        </nav>
+
+        <!-- Кнопка действия -->
+        <div class="flex items-center space-x-4">
+            <a href="/hcl-report" class="mono text-xs border border-zinc-800 bg-zinc-900/50 hover:border-zinc-700 px-3 py-1.5 rounded-lg text-zinc-300 hover:text-white transition">
+                + Добавить репорт
+            </a>
+        </div>
     </div>
 </header>
 
-<main class="container">
+<!-- MAIN CONTENT -->
+<main class="flex-grow max-w-4xl w-full mx-auto px-4 py-12">
 
-    <!-- Линейка прогресса -->
-    <div class="wizard-progress">
-        <div class="progress-line-fill" id="progressLine"></div>
-        <div class="progress-step active" data-step="1">1</div>
-        <div class="progress-step" data-step="2">2</div>
-        <div class="progress-step" data-step="3">3</div>
-        <div class="progress-step" data-step="4">✓</div>
+    <!-- Хлебные крошки и заголовок -->
+    <div class="mb-8 text-center sm:text-left">
+        <div class="text-xs text-zinc-500 mb-2">
+            <a href="/" class="hover:text-zinc-300">Главная</a> / <span class="text-zinc-400">Подбор ноутбука</span>
+        </div>
+        <h1 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">Умный подбор конфигурации</h1>
+        <p class="text-sm text-zinc-400 mt-2">Ответьте на несколько вопросов, и мы подберем устройство с идеальной совместимостью «из коробки».</p>
     </div>
 
-    <!-- ШАГ 1: ГОТОВНОСТЬ ПИЛИТЬ НАПИЛЬНИКОМ -->
-    <section class="wizard-step-panel active" id="step1">
-        <h2 class="step-title">Насколько вы готовы настраивать систему?</h2>
-        <p class="step-desc">Мы подбираем уровень совместимости железа под ваш комфорт в терминале Linux.</p>
+    <!-- Интерактивная форма подбора -->
+    <form method="GET" action="/catalog" class="space-y-8">
 
-        <div class="options-grid">
-            <div class="option-card selected" onclick="selectOption(this, 'comfort', 'strict')">
-                <div class="option-title">
-                    <span>🐧</span> Из коробки (OOTB)
-                </div>
-                <div class="option-desc">
-                    Вам нужна 100% стабильность. Никакой сборки драйверов из исходников. Всё, от Wi-Fi до веб-камеры, должно работать сразу после установки Ubuntu или Fedora.
-                </div>
+        <!-- ШАГ 1: Сценарий использования -->
+        <div class="bg-zinc-900/30 border border-zinc-800/80 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="mono text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20">01</span>
+                <h2 class="text-lg font-bold text-white">Для каких задач нужен ноутбук?</h2>
             </div>
 
-            <div class="option-card" onclick="selectOption(this, 'comfort', 'moderate')">
-                <div class="option-title">
-                    <span>🔧</span> Готов немного подкрутить
-                </div>
-                <div class="option-desc">
-                    Вам не трудно прописать параметры загрузчика GRUB, установить проприетарные кодеки или добавить один DKMS модуль для Bluetooth.
-                </div>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Опция 1 -->
+                <label class="relative group border border-zinc-800/80 bg-zinc-950/40 hover:border-emerald-500/50 rounded-xl p-5 flex flex-col justify-between cursor-pointer transition duration-200">
+                    <input type="radio" name="use_case" value="dev" class="peer sr-only" checked>
+                    <div class="absolute top-4 right-4 w-4 h-4 rounded-full border border-zinc-700 peer-checked:border-emerald-500 peer-checked:bg-emerald-500 flex items-center justify-center transition">
+                        <div class="w-1.5 h-1.5 rounded-full bg-black"></div>
+                    </div>
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-zinc-900 flex items-center justify-center text-zinc-400 group-hover:text-emerald-400 transition mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white text-sm mb-1">Разработка и DevOps</h3>
+                        <p class="text-xs text-zinc-500">Докер, компиляция, виртуальные машины. Нужен упор на CPU и RAM.</p>
+                    </div>
+                </label>
 
-            <div class="option-card" onclick="selectOption(this, 'comfort', 'hardcore')">
-                <div class="option-title">
-                    <span>💻</span> Gentoo-way / Я сам все починю
-                </div>
-                <div class="option-desc">
-                    Вас не пугают неработающие спящие режимы, сборка драйверов для тачпада из репозиториев на GitHub или ручная отладка ACPI таблиц. Главное — производительность железа!
-                </div>
-            </div>
-        </div>
-    </section>
+                <!-- Опция 2 -->
+                <label class="relative group border border-zinc-800/80 bg-zinc-950/40 hover:border-emerald-500/50 rounded-xl p-5 flex flex-col justify-between cursor-pointer transition duration-200">
+                    <input type="radio" name="use_case" value="everyday" class="peer sr-only">
+                    <div class="absolute top-4 right-4 w-4 h-4 rounded-full border border-zinc-700 peer-checked:border-emerald-500 peer-checked:bg-emerald-500 flex items-center justify-center transition">
+                        <div class="w-1.5 h-1.5 rounded-full bg-black"></div>
+                    </div>
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-zinc-900 flex items-center justify-center text-zinc-400 group-hover:text-emerald-400 transition mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white text-sm mb-1">Офис и учеба</h3>
+                        <p class="text-xs text-zinc-500">Браузер, документы, просмотр медиа. Важна автономность и тишина.</p>
+                    </div>
+                </label>
 
-    <!-- ШАГ 2: ХАРАКТЕРИСТИКИ ЖЕЛЕЗА -->
-    <section class="wizard-step-panel" id="step2">
-        <h2 class="step-title">Что для вас главное в самом железе?</h2>
-        <p class="step-desc">Сбалансируем требования к портативности и вычислительной мощности.</p>
-
-        <div class="options-grid columns-2">
-            <div class="option-card selected" onclick="selectOption(this, 'hardware', 'ultra')">
-                <div class="option-title">Автономность и вес</div>
-                <div class="option-desc">Тонкий ультрабук, долгая батарея, интегрированная графика. Вес до 1.3 кг.</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption(this, 'hardware', 'workstation')">
-                <div class="option-title">Мобильная рабочая станция</div>
-                <div class="option-desc">Мощный процессор AMD Ryzen или Intel Core, 32GB+ RAM. Компиляция кода без перегревов.</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption(this, 'hardware', 'gaming')">
-                <div class="option-title">Игры и 3D Графика</div>
-                <div class="option-desc">Наличие дискретной видеокарты. Максимальная производительность.</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption(this, 'hardware', 'budget')">
-                <div class="option-title">Практичный бюджетник</div>
-                <div class="option-desc">Оптимальное соотношение цены и качества. Легкий апгрейд диска и памяти вручную.</div>
+                <!-- Опция 3 -->
+                <label class="relative group border border-zinc-800/80 bg-zinc-950/40 hover:border-emerald-500/50 rounded-xl p-5 flex flex-col justify-between cursor-pointer transition duration-200">
+                    <input type="radio" name="use_case" value="gamedev" class="peer sr-only">
+                    <div class="absolute top-4 right-4 w-4 h-4 rounded-full border border-zinc-700 peer-checked:border-emerald-500 peer-checked:bg-emerald-500 flex items-center justify-center transition">
+                        <div class="w-1.5 h-1.5 rounded-full bg-black"></div>
+                    </div>
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-zinc-900 flex items-center justify-center text-zinc-400 group-hover:text-emerald-400 transition mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white text-sm mb-1">Игры и 3D-графика</h3>
+                        <p class="text-xs text-zinc-500">Steam Proton, Blender, DaVinci. Обязательна мощная дискретная видеокарта.</p>
+                    </div>
+                </label>
             </div>
         </div>
-    </section>
 
-    <!-- ШАГ 3: ЛИНУКСОВЫЕ ДЕТАЛИ -->
-    <section class="wizard-step-panel" id="step3">
-        <h2 class="step-title">Линуксовые ограничения (Dealbreakers)</h2>
-        <p class="step-desc">Укажите то, что для вас является критически важным при работе в Linux.</p>
-
-        <div class="options-grid" style="gap: 15px;">
-            <label class="checkbox-item">
-                <input type="checkbox" id="noNvidia" checked>
-                <div class="checkbox-text">
-                    <h4>Никакого Nvidia-проприетара (Только AMD / Intel)</h4>
-                    <p>Исключить дискретные карты Nvidia, чтобы избежать возни со слиянием драйверов Wayland и черных экранов.</p>
-                </div>
-            </label>
-
-            <label class="checkbox-item">
-                <input type="checkbox" id="intelWifi">
-                <div class="checkbox-text">
-                    <h4>Строго Intel Wi-Fi чипсет</h4>
-                    <p>Гарантирует отсутствие падения сети и стабильную работу Bluetooth без проприетарного блоба Realtek/Broadcom.</p>
-                </div>
-            </label>
-
-            <label class="checkbox-item">
-                <input type="checkbox" id="s3sleep">
-                <div class="checkbox-text">
-                    <h4>Поддержка глубокого сна S3 (вместо s2idle)</h4>
-                    <p>Ноутбук не должен разряжаться в рюкзаке. Требуется честная поддержка режима ACPI Suspend-to-RAM.</p>
-                </div>
-            </label>
-        </div>
-    </section>
-
-    <!-- ШАГ 4: РЕЗУЛЬТАТЫ -->
-    <section class="wizard-step-panel" id="step4">
-        <h2 class="step-title">Идеальное совпадение найдено!</h2>
-        <p class="step-desc">Мы сопоставили ваши пожелания с базой ядра и логами dmesg.</p>
-
-        <div class="result-container">
-            <div class="laptop-result-card">
-                <div class="result-img-box">
-                    <!-- Набросок силуэта ноута -->
-                    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="1.5">
-                        <rect x="4" y="4" width="16" height="11" rx="1.5" />
-                        <path d="M2 19 h20" />
-                        <path d="M4 15 L2 19 M20 15 L22 19" />
-                    </svg>
-                </div>
+        <!-- ШАГ 2: Целевой Дистрибутив -->
+        <div class="bg-zinc-900/30 border border-zinc-800/80 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="mono text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20">02</span>
                 <div>
-                    <div class="match-badge">98% Совместимость (Platinum)</div>
-                    <h3 class="result-title" id="resultName">Zenith X1 Pro</h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">Рекомендуемый дистрибутив: <strong>Fedora Workstation / Arch Linux (Kernel 6.11+)</strong></p>
+                    <h2 class="text-lg font-bold text-white">Какое семейство Linux планируете использовать?</h2>
+                    <p class="text-xs text-zinc-500 mt-0.5">Влияет на требования к свежести ядра (актуально для нового "железа")</p>
+                </div>
+            </div>
 
-                    <div class="result-specs">
-                        <div class="result-spec-item">Экран: <strong>14.0" OLED 120Hz</strong></div>
-                        <div class="result-spec-item">CPU: <strong>AMD Ryzen 7 8840U</strong></div>
-                        <div class="result-spec-item">Wi-Fi: <strong>Intel BE200 (OOTB)</strong></div>
-                        <div class="result-spec-item">Вес: <strong>1.28 кг</strong></div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <!-- Ubuntu -->
+                <label class="relative group border border-zinc-800/80 bg-zinc-950/40 hover:border-orange-500/50 rounded-xl p-4 text-center cursor-pointer transition">
+                    <input type="radio" name="distro_family" value="debian" class="peer sr-only" checked>
+                    <div class="w-12 h-12 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition">
+                        <span class="mono text-xs font-bold">UBU</span>
                     </div>
+                    <span class="block text-sm font-semibold text-white">Ubuntu / Debian</span>
+                    <span class="block text-[10px] text-zinc-500 mt-1">Стабильные ядра</span>
+                    <div class="absolute inset-0 border-2 border-transparent peer-checked:border-orange-500 rounded-xl pointer-events-none transition"></div>
+                </label>
 
-                    <div class="linux-praise">
-                        <span style="font-weight: 700; color: var(--success-color);">Почему он:</span>
-                        Полностью свободные драйверы. Видеоядро Radeon работает идеально на Wayland, а Wi-Fi модуль не требует внешней прошивки. Сон отрабатывает без нареканий.
+                <!-- Arch -->
+                <label class="relative group border border-zinc-800/80 bg-zinc-950/40 hover:border-cyan-500/50 rounded-xl p-4 text-center cursor-pointer transition">
+                    <input type="radio" name="distro_family" value="arch" class="peer sr-only">
+                    <div class="w-12 h-12 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition">
+                        <span class="mono text-xs font-bold">ARC</span>
+                    </div>
+                    <span class="block text-sm font-semibold text-white">Arch / Manjaro</span>
+                    <span class="block text-[10px] text-zinc-500 mt-1">Rolling-release</span>
+                    <div class="absolute inset-0 border-2 border-transparent peer-checked:border-cyan-500 rounded-xl pointer-events-none transition"></div>
+                </label>
+
+                <!-- Fedora -->
+                <label class="relative group border border-zinc-800/80 bg-zinc-950/40 hover:border-blue-500/50 rounded-xl p-4 text-center cursor-pointer transition">
+                    <input type="radio" name="distro_family" value="fedora" class="peer sr-only">
+                    <div class="w-12 h-12 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition">
+                        <span class="mono text-xs font-bold">FED</span>
+                    </div>
+                    <span class="block text-sm font-semibold text-white">Fedora / RHEL</span>
+                    <span class="block text-[10px] text-zinc-500 mt-1">Свежие и надежные</span>
+                    <div class="absolute inset-0 border-2 border-transparent peer-checked:border-blue-500 rounded-xl pointer-events-none transition"></div>
+                </label>
+
+                <!-- Любой -->
+                <label class="relative group border border-zinc-800/80 bg-zinc-950/40 hover:border-emerald-500/50 rounded-xl p-4 text-center cursor-pointer transition">
+                    <input type="radio" name="distro_family" value="any" class="peer sr-only">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition">
+                        <span class="mono text-xs font-bold">ANY</span>
+                    </div>
+                    <span class="block text-sm font-semibold text-white">Без разницы</span>
+                    <span class="block text-[10px] text-zinc-500 mt-1">Макс. совместимость</span>
+                    <div class="absolute inset-0 border-2 border-transparent peer-checked:border-emerald-500 rounded-xl pointer-events-none transition"></div>
+                </label>
+            </div>
+        </div>
+
+        <!-- ШАГ 3: Бюджет и Экран -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Бюджет -->
+            <div class="bg-zinc-900/30 border border-zinc-800/80 rounded-2xl p-6 backdrop-blur-sm">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="mono text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20">03</span>
+                    <h2 class="text-sm font-bold text-white">Ценовой диапазон (₽)</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative flex-1">
+                        <span class="absolute left-3 top-2.5 text-xs text-zinc-500">от</span>
+                        <input type="number" name="price_min" placeholder="40 000" class="w-full pl-8 pr-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-emerald-500 transition">
+                    </div>
+                    <div class="relative flex-1">
+                        <span class="absolute left-3 top-2.5 text-xs text-zinc-500">до</span>
+                        <input type="number" name="price_max" placeholder="150 000" class="w-full pl-8 pr-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-emerald-500 transition">
                     </div>
                 </div>
             </div>
+
+            <!-- Экран -->
+            <div class="bg-zinc-900/30 border border-zinc-800/80 rounded-2xl p-6 backdrop-blur-sm">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="mono text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20">04</span>
+                    <h2 class="text-sm font-bold text-white">Диагональ экрана</h2>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <label class="cursor-pointer">
+                        <input type="checkbox" name="screen[]" value="compact" class="peer sr-only">
+                        <div class="py-2 text-center text-xs border border-zinc-800 bg-zinc-950/40 rounded-lg peer-checked:border-emerald-500 peer-checked:text-emerald-400 transition text-zinc-400">
+                            менее 14"
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="checkbox" name="screen[]" value="medium" class="peer sr-only" checked>
+                        <div class="py-2 text-center text-xs border border-zinc-800 bg-zinc-950/40 rounded-lg peer-checked:border-emerald-500 peer-checked:text-emerald-400 transition text-zinc-400">
+                            14" - 15.6"
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="checkbox" name="screen[]" value="large" class="peer sr-only">
+                        <div class="py-2 text-center text-xs border border-zinc-800 bg-zinc-950/40 rounded-lg peer-checked:border-emerald-500 peer-checked:text-emerald-400 transition text-zinc-400">
+                            16" +
+                        </div>
+                    </label>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <!-- КНОПКИ УПРАВЛЕНИЯ -->
-    <div class="wizard-navigation">
-        <button class="btn btn-secondary" id="btnPrev" onclick="navigateStep(-1)" disabled>Назад</button>
-        <button class="btn btn-primary" id="btnNext" onclick="navigateStep(1)">Далее</button>
-    </div>
+        <!-- ШАГ 4: Критичное оборудование -->
+        <div class="bg-zinc-900/30 border border-zinc-800/80 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="mono text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20">05</span>
+                <div>
+                    <h2 class="text-lg font-bold text-white">Что должно работать «из коробки» на 100%?</h2>
+                    <p class="text-xs text-zinc-500 mt-0.5">Система исключит из выдачи модели со старыми «проблемными» ревизиями модулей.</p>
+                </div>
+            </div>
 
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Wi-Fi / Bluetooth -->
+                <label class="relative flex items-start p-4 border border-zinc-800 bg-zinc-950/30 hover:border-zinc-700 rounded-xl cursor-pointer transition">
+                    <div class="flex items-center h-5">
+                        <input type="checkbox" name="require_wifi" value="1" checked class="h-4 w-4 rounded border-zinc-800 bg-zinc-900 text-emerald-500 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-2">
+                    </div>
+                    <div class="ml-3 text-xs">
+                        <span class="block font-bold text-zinc-200">Wi-Fi / Bluetooth модуль</span>
+                        <span class="text-zinc-500">Автоматический подбор чипов Intel / Atheros</span>
+                    </div>
+                </label>
+
+                <!-- Сканер отпечатков -->
+                <label class="relative flex items-start p-4 border border-zinc-800 bg-zinc-950/30 hover:border-zinc-700 rounded-xl cursor-pointer transition">
+                    <div class="flex items-center h-5">
+                        <input type="checkbox" name="require_fingerprint" value="1" class="h-4 w-4 rounded border-zinc-800 bg-zinc-900 text-emerald-500 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-2">
+                    </div>
+                    <div class="ml-3 text-xs">
+                        <span class="block font-bold text-zinc-200">Сканер отпечатков (Fingerprint)</span>
+                        <span class="text-zinc-500">Проверка совместимости с библиотекой fprintd</span>
+                    </div>
+                </label>
+
+                <!-- Режим сна -->
+                <label class="relative flex items-start p-4 border border-zinc-800 bg-zinc-950/30 hover:border-zinc-700 rounded-xl cursor-pointer transition">
+                    <div class="flex items-center h-5">
+                        <input type="checkbox" name="require_sleep" value="1" checked class="h-4 w-4 rounded border-zinc-800 bg-zinc-900 text-emerald-500 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-2">
+                    </div>
+                    <div class="ml-3 text-xs">
+                        <span class="block font-bold text-zinc-200">Честный режим сна (S3 State)</span>
+                        <span class="text-zinc-500">Защита от разряда батареи и перегрева в сумке</span>
+                    </div>
+                </label>
+
+                <!-- Сенсорный экран -->
+                <label class="relative flex items-start p-4 border border-zinc-800 bg-zinc-950/30 hover:border-zinc-700 rounded-xl cursor-pointer transition">
+                    <div class="flex items-center h-5">
+                        <input type="checkbox" name="require_touch" value="1" class="h-4 w-4 rounded border-zinc-800 bg-zinc-900 text-emerald-500 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-2">
+                    </div>
+                    <div class="ml-3 text-xs">
+                        <span class="block font-bold text-zinc-200">Сенсорный экран и перо</span>
+                        <span class="text-zinc-500">Валидация работы тачскрина на Wayland / X11</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Кнопка отправки -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-zinc-900/10 border border-zinc-900 p-6 rounded-2xl">
+            <div class="text-xs text-zinc-500 max-w-md text-center sm:text-left">
+                Конфигуратор просканирует базу LinCheck и сформирует список устройств, ранжированных по оценке стабильности.
+            </div>
+            <button type="submit" class="w-full sm:w-auto px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold rounded-xl transition shadow-[0_4px_20px_rgba(16,185,129,0.2)] text-sm flex items-center justify-center space-x-2">
+                <span>Показать совместимые ноутбуки</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+
+    </form>
 </main>
 
-<footer style="margin-top: auto; border-top: 1px solid var(--border-color); padding: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
-    LinHardware Selection Engine, 2026. Парсинг коммитов ядра выполняется в реальном времени.
+<!-- FOOTER -->
+<footer class="border-t border-zinc-900 bg-zinc-950 py-8">
+    <div class="max-w-6xl w-full mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+        <div class="flex items-center space-x-2">
+            <span class="mono text-zinc-400">&copy; 2026 LinCheck.</span>
+            <span>Проект создается сообществом для сообщества.</span>
+        </div>
+
+        <div class="flex items-center space-x-6">
+            <a href="https://github.com" target="_blank" class="hover:text-zinc-300 transition flex items-center space-x-1">
+                <span>GitHub</span>
+            </a>
+            <a href="/privacy" class="hover:text-zinc-300 transition">Конфиденциальность</a>
+            <a href="/api-docs" class="mono hover:text-zinc-300 transition">API</a>
+        </div>
+    </div>
 </footer>
 
-<!-- Простая логика переключения шагов -->
-<script>
-    let currentStep = 1;
-    const totalSteps = 4;
-
-    function navigateStep(direction) {
-        // Скрываем текущий
-        document.getElementById(`step${currentStep}`).classList.remove('active');
-
-        currentStep += direction;
-        if (currentStep < 1) currentStep = 1;
-        if (currentStep > totalSteps) currentStep = totalSteps;
-
-        // Показываем новый шаг
-        document.getElementById(`step${currentStep}`).classList.add('active');
-
-        // Обновляем кнопки управления
-        document.getElementById('btnPrev').disabled = (currentStep === 1);
-
-        if (currentStep === totalSteps) {
-            document.getElementById('btnNext').innerText = 'Начать заново';
-            calculateResult();
-        } else {
-            document.getElementById('btnNext').innerText = 'Далее';
-        }
-
-        // Обновляем прогресс-бар
-        updateProgress();
-    }
-
-    function updateProgress() {
-        // Линия
-        const percent = ((currentStep - 1) / (totalSteps - 1)) * 100;
-        document.getElementById('progressLine').style.width = percent + '%';
-
-        // Кружки
-        document.querySelectorAll('.progress-step').forEach(step => {
-            const stepNum = parseInt(step.getAttribute('data-step'));
-            step.classList.remove('active', 'completed');
-
-            if (stepNum === currentStep) {
-                step.classList.add('active');
-            } else if (stepNum < currentStep) {
-                step.classList.add('completed');
-            }
-        });
-    }
-
-    function selectOption(element, category, value) {
-        // Снятие выделения с остальных карточек в текущей группе
-        const parent = element.parentElement;
-        parent.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-        element.classList.add('selected');
-    }
-
-    function calculateResult() {
-        // Пример простейшей реактивности подбора на основе чекбоксов
-        const noNvidia = document.getElementById('noNvidia').checked;
-        const s3sleep = document.getElementById('s3sleep').checked;
-        const resultName = document.getElementById('resultName');
-
-        if (noNvidia && s3sleep) {
-            resultName.innerText = "Zenith X1 Pro (AMD Edition)";
-        } else if (!noNvidia) {
-            resultName.innerText = "Tuxedo Stellaris 16 (Nvidia RTX)";
-        } else {
-            resultName.innerText = "AeroBook 14 Carbon (Intel Core Ultra)";
-        }
-    }
-</script>
 </body>
 </html>

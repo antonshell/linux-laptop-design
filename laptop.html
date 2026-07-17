@@ -1,688 +1,357 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Совместимость Zenith X1 Pro с Linux — Hardware DB</title>
-    <style>
-        /* === ПЕРЕМЕННЫЕ ДЛЯ ЦВЕТОВОЙ СХЕМЫ === */
-        /* Просто замени значения ниже на цвета своего проекта */
-        :root {
-            --primary-color: #6366f1;       /* Акцентный цвет (Indigo) */
-            --primary-hover: #4f46e5;
-            --success-color: #10b981;       /* Зеленый (Полная совместимость) */
-            --success-bg: rgba(16, 185, 129, 0.1);
-            --dark-bg: #0b0f19;             /* Фон шапки/подвала */
-            --light-bg: #0f172a;            /* Общий темный фон страницы */
-            --card-bg: #1e293b;             /* Фон блоков и карточек */
-            --text-main: #f8fafc;           /* Основной текст */
-            --text-muted: #94a3b8;          /* Второстепенный текст */
-            --border-color: #334155;        /* Цвет границ */
-            --radius: 10px;
-        }
-
-        /* Сброс стилей */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: var(--text-main);
-            background-color: var(--light-bg);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* === HEADER (База данных / Портал) === */
-        .site-header {
-            background-color: var(--dark-bg);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .header-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #ffffff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: 0.5px;
-        }
-        .logo span {
-            color: var(--primary-color);
-        }
-        .main-nav {
-            display: flex;
-            gap: 24px;
-        }
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: #ffffff;
-        }
-        .action-btn {
-            background-color: var(--primary-color);
-            color: #ffffff;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: background-color 0.2s ease;
-        }
-        .action-btn:hover {
-            background-color: var(--primary-hover);
-        }
-
-        /* === HERO СЕКЦИЯ УСТРОЙСТВА === */
-        .hero-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 40px;
-            margin: 40px 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-        .hero-image-box {
-            background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
-            border-radius: var(--radius);
-            padding: 40px 20px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .laptop-svg {
-            width: 100%;
-            max-width: 440px;
-            height: auto;
-            filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.3));
-        }
-        .hero-info h1 {
-            font-size: 2.2rem;
-            margin: 0 0 12px 0;
-            color: #ffffff;
-        }
-        .compatibility-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: var(--success-bg);
-            color: var(--success-color);
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            margin-bottom: 20px;
-        }
-        .compatibility-status::before {
-            content: "";
-            width: 8px;
-            height: 8px;
-            background-color: var(--success-color);
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .hero-description {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            margin-bottom: 24px;
-        }
-        .button-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--text-muted);
-        }
-
-        /* === БЛОК LINUX СОВМЕСТИМОСТИ === */
-        .linux-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-left: 6px solid var(--success-color);
-            border-radius: var(--radius);
-            padding: 30px;
-            margin-bottom: 40px;
-        }
-        .linux-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-        .linux-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 0;
-        }
-        .linux-badges {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        .badge {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-main);
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
-        }
-        .badge.green {
-            background-color: var(--success-bg);
-            color: var(--success-color);
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-
-        /* === РЕЗУЛЬТАТЫ ТЕСТОВ (БЕНЧМАРКИ) === */
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin: 50px 0 24px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .benchmark-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-        .bench-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 24px;
-        }
-        .bench-name {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-        .bar-container {
-            margin-bottom: 16px;
-        }
-        .bar-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 6px;
-        }
-        .bar-outer {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            height: 28px;
-            overflow: hidden;
-            display: flex;
-        }
-        .bar-inner {
-            background-color: var(--primary-color);
-            color: #ffffff;
-            font-size: 0.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            padding-left: 12px;
-        }
-        .bar-inner.competitor {
-            background-color: #475569;
-        }
-        .bar-inner.green {
-            background-color: var(--success-color);
-        }
-
-        /* === ТАБЛИЦА ХАРАКТЕРИСТИК === */
-        .specs-table-wrapper {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 40px;
-        }
-        .specs-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-        .specs-table th {
-            background-color: rgba(255, 255, 255, 0.02);
-            color: #ffffff;
-            padding: 16px 24px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .specs-table td {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
-        }
-        .specs-table tr:last-child td {
-            border-bottom: none;
-        }
-        .specs-label {
-            font-weight: 600;
-            color: var(--text-main);
-            width: 30%;
-        }
-        .specs-value {
-            color: var(--text-muted);
-        }
-
-        /* === КОММЕНТАРИИ === */
-        .comments-box {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 30px;
-            margin-bottom: 60px;
-        }
-        .comment-item {
-            border-bottom: 1px solid var(--border-color);
-            padding: 20px 0;
-        }
-        .comment-item:first-child { padding-top: 0; }
-        .comment-item:last-of-type {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-        .comment-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-        .comment-author {
-            font-weight: 700;
-            color: #ffffff;
-        }
-        .comment-date {
-            color: var(--text-muted);
-        }
-        .comment-text {
-            margin: 0;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-
-        /* Форма добавления репорта/отзыва */
-        .comment-form {
-            border-top: 1px solid var(--border-color);
-            margin-top: 30px;
-            padding-top: 30px;
-        }
-        .comment-form h3 {
-            margin: 0 0 16px 0;
-            font-size: 1.15rem;
-            color: #ffffff;
-        }
-        .form-textarea {
-            width: 100%;
-            min-height: 110px;
-            padding: 14px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            border-radius: 8px;
-            resize: vertical;
-            font-family: inherit;
-            margin-bottom: 16px;
-            font-size: 0.95rem;
-        }
-        .form-textarea:focus {
-            outline: 2px solid var(--primary-color);
-            border-color: transparent;
-        }
-
-        /* === FOOTER === */
-        .site-footer {
-            background-color: var(--dark-bg);
-            color: var(--text-muted);
-            padding: 60px 0 30px 0;
-            border-top: 1px solid var(--border-color);
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr repeat(3, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        .footer-brand h4 {
-            color: #ffffff;
-            font-size: 1.15rem;
-            margin: 0 0 16px 0;
-            font-weight: 800;
-        }
-        .footer-brand p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        .footer-col h5 {
-            color: #ffffff;
-            font-size: 0.95rem;
-            margin: 0 0 20px 0;
-            font-weight: 600;
-        }
-        .footer-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-        }
-        .footer-links a:hover {
-            color: #ffffff;
-        }
-        .footer-bottom {
-            border-top: 1px solid var(--border-color);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 992px) {
-            .hero-section {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 30px;
-            }
-            .hero-image-box { order: -1; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 576px) {
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-bottom {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
+    <title>Zenith X1 Pro — Спецификации и аппаратные тесты Linux</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0B0F19',
+                            surface: '#131B2E',
+                            accent: '#10B981',
+                            'accent-hover': '#059669',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            muted: '#94A3B8'
+                        }
+                    }
+                }
             }
         }
-    </style>
+    </script>
 </head>
-<body>
+<body class="bg-brand-bg text-slate-200 font-sans antialiased min-h-screen flex flex-col">
 
-<!-- ШАПКА ПОРТАЛА -->
-<header class="site-header">
-    <div class="container header-wrapper">
-        <a href="#" class="logo">Lin<span>Hardware</span></a>
-        <nav class="main-nav">
-            <a href="#" class="nav-link">База устройств</a>
-            <a href="#" class="nav-link active">Zenith X1 Pro</a>
-            <a href="#" class="nav-link">Статистика ядер</a>
-            <a href="#" class="nav-link">Руководства</a>
-        </nav>
-        <a href="#" class="action-btn">Добавить отчет</a>
+<!-- === HEADER === -->
+<header class="sticky top-0 z-50 w-full bg-[#0B0F19]/80 backdrop-blur-md border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <a href="#" class="text-base font-bold tracking-tight text-white flex items-center gap-2.5 transition-opacity hover:opacity-90">
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand-accent shadow-[0_0_12px_#10B981]"></span>
+                    <span class="font-mono tracking-wider">LinHardware</span>
+                </a>
+            </div>
+            <nav class="hidden md:flex items-center space-x-1">
+                <a href="#" class="text-brand-muted hover:text-white px-3 py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Каталог платформ</a>
+                <span class="text-brand-border select-none">/</span>
+                <a href="#" class="text-white bg-brand-surface/60 border border-brand-border px-3 py-2 rounded text-xs font-semibold uppercase tracking-wider">Паспорт: Zenith X1 Pro</a>
+                <span class="text-brand-border select-none">/</span>
+                <a href="#" class="text-brand-muted hover:text-white px-3 py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Ядра и патчи</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <button class="bg-brand-accent/10 hover:bg-brand-accent text-brand-accent hover:text-[#0B0F19] border border-brand-accent/20 hover:border-transparent px-3.5 py-1.5 rounded font-bold text-[11px] tracking-wide uppercase transition-all duration-200">
+                    Создать пробу
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center p-2 rounded text-brand-muted hover:text-white hover:bg-brand-surface border border-brand-border/40 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-brand-border bg-[#0B0F19] px-4 py-4 space-y-2">
+        <a href="#" class="block text-brand-muted hover:text-white py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Каталог платформ</a>
+        <a href="#" class="block text-white bg-brand-surface/80 border border-brand-border/60 px-3 py-2 rounded text-xs font-semibold uppercase tracking-wider">Паспорт: Zenith X1 Pro</a>
+        <a href="#" class="block text-brand-muted hover:text-white py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Ядра и патчи</a>
     </div>
 </header>
 
-<div class="container">
+<!-- === MAIN CONTENT === -->
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12">
 
-    <!-- HERO СЕКЦИЯ С SVG-НОУТБУКОМ -->
-    <div class="hero-section">
-        <div class="hero-image-box">
-            <svg class="laptop-svg" viewBox="0 0 480 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Экран -->
-                <rect x="70" y="20" width="340" height="210" rx="10" fill="#020617" />
-                <!-- Матрица дисплея -->
-                <rect x="78" y="28" width="324" height="194" rx="4" fill="#0b0f19" />
-                <!-- Обои на экране -->
-                <path d="M78 180 C 180 120, 240 240, 402 140 L 402 222 L 78 222 Z" fill="var(--primary-color)" opacity="0.3"/>
-                <circle cx="240" cy="110" r="50" fill="var(--primary-color)" opacity="0.15" filter="blur(15px)"/>
-                <!-- Камера -->
-                <circle cx="240" cy="24" r="2" fill="#475569" />
-
-                <!-- Корпус клавиатуры -->
-                <path d="M30 232 L 450 232 L 464 246 C 464 249, 450 252, 440 252 L 40 252 C 30 252, 16 249, 16 246 Z" fill="#475569" />
-                <rect x="64" y="235" width="352" height="8" rx="2" fill="#1e293b" />
-                <rect x="200" y="244" width="80" height="6" rx="1" fill="#334155" />
-                <!-- Тень -->
-                <path d="M40 252 L 440 252 L 430 255 L 50 255 Z" fill="#000000" opacity="0.6" />
-            </svg>
+    <!-- === 1. НАЗВАНИЕ И ФОТО НОУТБУКА === -->
+    <section class="mb-12">
+        <div class="flex items-center gap-2 text-xs text-brand-muted uppercase tracking-wider mb-4">
+            <a href="#" class="hover:text-white">Главная</a> <span>/</span> <span class="text-white">Zenith X1 Pro</span>
         </div>
-
-        <div class="hero-info">
-            <div class="compatibility-status">Совместим (Platinum)</div>
-            <h1>Zenith X1 Pro</h1>
-            <p class="hero-description">Профессиональный 16-дюймовый ультрабук. В этом разделе собраны результаты тестирования оборудования, отчеты о совместимости с ядрами Linux и отзывы системных инженеров.</p>
-            <div class="button-group">
-                <button class="action-btn" style="padding: 12px 24px; font-size: 0.95rem;">Скачать отчет lshw</button>
-                <button class="btn-outline">Логи dmesg</button>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-brand-surface border border-brand-border rounded p-6 md:p-8 relative overflow-hidden">
+            <div class="lg:col-span-7">
+                <div class="inline-flex items-center gap-2 bg-brand-accent/10 text-brand-accent text-[11px] font-bold px-3 py-1 rounded border border-brand-accent/20 tracking-wider uppercase mb-4">
+                    Аппаратный паспорт устройства
+                </div>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">Ноутбук Zenith X1 Pro</h1>
+                <p class="text-brand-muted text-sm md:text-base leading-relaxed max-w-2xl">
+                    Высокопроизводительная инженерная станция. Архитектурные особенности ревизии оптимизированы под Unix-подобные среды, обеспечивая низкие задержки при распределении прерываний ACPI и нативную поддержку контроллеров шины.
+                </p>
+            </div>
+            <div class="lg:col-span-5 flex justify-center items-center bg-[#0B0F19]/60 border border-brand-border rounded p-4 h-64 overflow-hidden relative group">
+                <svg class="w-full max-w-[240px] opacity-80" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="30" y="20" width="140" height="84" rx="4" stroke="#475569" stroke-width="2" fill="#0B0F19"/>
+                    <line x1="16" y1="105" x2="184" y2="105" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="85" y1="109" x2="115" y2="109" stroke="#94A3B8" stroke-width="2"/>
+                    <circle cx="100" cy="62" r="12" fill="#10B981" opacity="0.15"/>
+                    <path d="M95 62L99 66L105 58" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- СОВМЕСТИМОСТЬ С LINUX -->
-    <div class="linux-card">
-        <div class="linux-header">
-            <h3 class="linux-title">Текущий статус поддержки ядра</h3>
-        </div>
-        <div class="linux-badges">
-            <span class="badge green">Ubuntu 26.04 LTS (Out of the box)</span>
-            <span class="badge green">Fedora Workstation (Fully Functional)</span>
-            <span class="badge">Arch Linux (Tested Kernel 6.11+)</span>
-            <span class="badge">Debian 13 (Trixie) Ready</span>
-        </div>
-        <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem;">
-            Все ключевые подсистемы устройства (включая Wi-Fi 7 чипсет, тачпад через i2c-designware, управление питанием ACPI и вывод звука через SOF) поддерживаются нативным кодом ядра Linux. Не требуется установка проприетарных DKMS-модулей.
-        </p>
-    </div>
-
-    <!-- РЕЗУЛЬТАТЫ БЕНЧМАРКОВ В LINUX -->
-    <h2 class="section-title">Производительность в Linux окружении</h2>
-    <div class="benchmark-grid">
-
-        <!-- Тест 1 -->
-        <div class="bench-card">
-            <div class="bench-name">Компиляция ядра Linux (make defconfig, секунд)</div>
-            <div class="bar-container">
-                <div class="bar-label">
-                    <span>Zenith X1 Pro (меньше — лучше)</span>
-                    <strong>43 сек</strong>
+    <!-- === 2. СПИСОК ХАРАКТЕРИСТИК === -->
+    <section class="mb-12">
+        <h2 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Технические характеристики
+        </h2>
+        <div class="bg-brand-surface border border-brand-border rounded overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 text-xs md:text-sm divide-y md:divide-y-0 md:divide-x divide-brand-border/60">
+                <div class="divide-y divide-brand-border/40">
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
+                        <span class="text-brand-muted font-medium">Процессор</span>
+                        <span class="col-span-2 text-white font-semibold">AMD Ryzen 9 8945HS (8 ядер / 16 потоков)</span>
+                    </div>
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
+                        <span class="text-brand-muted font-medium">Графика</span>
+                        <span class="col-span-2 text-white">AMD Radeon 780M (RDNA 3)</span>
+                    </div>
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
+                        <span class="text-brand-muted font-medium">ОЗУ</span>
+                        <span class="col-span-2 text-white">32 GB LPDDR5X 7500 MHz</span>
+                    </div>
                 </div>
-                <div class="bar-outer">
-                    <div class="bar-inner green" style="width: 55%">55% (Быстрее)</div>
-                </div>
-            </div>
-            <div class="bar-container">
-                <div class="bar-label">
-                    <span>Средний показатель по БД</span>
-                    <strong>78 сек</strong>
-                </div>
-                <div class="bar-outer">
-                    <div class="bar-inner competitor" style="width: 100%">100%</div>
+                <div class="divide-y divide-brand-border/40">
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
+                        <span class="text-brand-muted font-medium">Дисплей</span>
+                        <span class="col-span-2 text-white">16" IPS, 2560x1600 (16:10), 165Hz</span>
+                    </div>
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
+                        <span class="text-brand-muted font-medium">Накопитель</span>
+                        <span class="col-span-2 text-white">1TB NVMe PCIe 4.0 x4</span>
+                    </div>
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
+                        <span class="text-brand-muted font-medium">Интерфейсы</span>
+                        <span class="col-span-2 text-white">2x USB4 (40Gbps), Wi-Fi 7 MediaTek</span>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Тест 2 -->
-        <div class="bench-card">
-            <div class="bench-name">Потребление энергии в простое (ватт)</div>
-            <div class="bar-container">
-                <div class="bar-label">
-                    <span>Zenith X1 Pro (меньше — лучше)</span>
-                    <strong>4.2 W</strong>
+    <!-- === 3. СВОДНАЯ ИНФОРМАЦИЯ О СОВМЕСТИМОСТИ === -->
+    <section class="mb-12">
+        <h2 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Сводная совместимость подсистем
+        </h2>
+        <div class="bg-brand-surface border border-brand-border rounded overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs md:text-sm">
+                    <thead>
+                    <tr class="bg-[#0B0F19]/40 border-b border-brand-border text-brand-muted font-semibold uppercase tracking-wider text-[11px]">
+                        <th class="p-4 pl-6">Компонент системы</th>
+                        <th class="p-4">Модуль / Подсистема ядра</th>
+                        <th class="p-4 text-right pr-6">Статус интеграции</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y divide-brand-border/60">
+                    <tr class="hover:bg-white/[0.01]">
+                        <td class="p-4 pl-6 font-medium text-white">Интерфейс питания и сна</td>
+                        <td class="p-4 text-brand-muted font-mono text-xs">acpi_cpufreq / amd-pstate</td>
+                        <td class="p-4 text-right pr-6 text-brand-accent font-semibold">OOTB (S3/S0ix OK)</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.01]">
+                        <td class="p-4 pl-6 font-medium text-white">Беспроводной стек</td>
+                        <td class="p-4 text-brand-muted font-mono text-xs">mt792x_core (Wi-Fi 7)</td>
+                        <td class="p-4 text-right pr-6 text-brand-accent font-semibold">Стабильно (Kernel 6.11+)</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.01]">
+                        <td class="p-4 pl-6 font-medium text-white">Аудиоархитектура</td>
+                        <td class="p-4 text-brand-muted font-mono text-xs">snd_sof_amd_rembrandt</td>
+                        <td class="p-4 text-right pr-6 text-brand-accent font-semibold">Работает (PipeWire)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- === 4. СПИСОК АППАРАТНЫХ ТЕСТОВ (PROBES) === -->
+    <section class="mb-12">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Логи и тесты пользователей (Probes)
+            </h2>
+            <span class="text-xs bg-[#1E293B] border border-brand-border text-slate-300 font-mono px-2 py-0.5 rounded">Всего: 4</span>
+        </div>
+
+        <div class="bg-brand-surface border border-brand-border rounded overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs md:text-sm border-collapse">
+                    <thead>
+                    <tr class="bg-[#0B0F19]/50 border-b border-brand-border text-brand-muted font-semibold uppercase tracking-wider text-[11px]">
+                        <th class="p-4 pl-6 w-1/3">Идентификатор лога (ID)</th>
+                        <th class="p-4 w-1/3">Операционная система</th>
+                        <th class="p-4 text-right pr-6 w-1/3">Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y divide-brand-border/40 font-medium">
+                    <tr class="hover:bg-white/[0.01] transition-colors">
+                        <td class="p-4 pl-6">
+                            <div class="flex items-center gap-3">
+                                <a href="#" class="text-brand-accent hover:underline font-mono font-semibold tracking-wide text-sm">69f21e4be</a>
+                                <span class="text-[10px] bg-amber-900/40 text-amber-400 border border-amber-500/20 px-1.5 py-0.5 rounded uppercase font-bold">Flatpak</span>
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l-.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3-1.57-3-3.5s1.07-3.5 3-3.5 3 1.57 3 3.5-1.07 3.5-3 3.5z"/></svg>
+                                <span class="text-slate-200">Kubuntu 24.04 (Kernel 6.8)</span>
+                            </div>
+                        </td>
+                        <td class="p-4 text-right pr-6 text-brand-muted font-mono text-xs">Янв 03, 2026</td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.01] transition-colors">
+                        <td class="p-4 pl-6">
+                            <div class="flex items-center gap-3">
+                                <a href="#" class="text-brand-accent hover:underline font-mono font-semibold tracking-wide text-sm">a435ff1bd6</a>
+                                <span class="text-[10px] bg-emerald-900/40 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded uppercase font-bold">Classic</span>
+                                <span class="text-[10px] bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded uppercase font-bold">Rev</span>
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l-.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3-1.57-3-3.5s1.07-3.5 3-3.5 3 1.57 3 3.5-1.07 3.5-3 3.5z"/></svg>
+                                <span class="text-slate-200">Kubuntu 24.04 (Kernel 6.8)</span>
+                            </div>
+                        </td>
+                        <td class="p-4 text-right pr-6 text-brand-muted font-mono text-xs">Янв 02, 2026</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- === 5. ОТЗЫВЫ ПОЛЬЗОВАТЕЛЕЙ (С РЕЙТИНГОМ) === -->
+    <section class="bg-brand-surface border border-brand-border rounded p-6">
+        <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-6 pb-4 border-b border-brand-border">Экспертные отзывы</h3>
+
+        <div class="space-y-6">
+            <!-- Отзыв 1 -->
+            <div>
+                <div class="flex items-center justify-between mb-1">
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="font-bold text-white">dev_architect_99</span>
+                        <span class="text-brand-muted">• Вчера, 18:24</span>
+                    </div>
+                    <!-- Рейтинг звездами -->
+                    <div class="flex items-center gap-0.5 text-amber-400">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-slate-700" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
                 </div>
-                <div class="bar-outer">
-                    <div class="bar-inner green" style="width: 42%">4.2W</div>
+                <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                    Накатил Arch Linux с ядром Zen. Ноутбук работает превосходно. Автономность отличная. Спящий режим (S3) отрабатывает корректно через ACPI таблицы.
+                </p>
+            </div>
+
+            <!-- Отзыв 2 -->
+            <div class="pt-4 border-t border-brand-border/40">
+                <div class="flex items-center justify-between mb-1">
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="font-bold text-white">sys_admin_nix</span>
+                        <span class="text-brand-muted">• 3 дня назад</span>
+                    </div>
+                    <div class="flex items-center gap-0.5 text-amber-400">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                </div>
+                <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                    На Fedora всё завелось прямо из коробки. Внешний монитор через Type-C работает отлично. Никаких графических артефактов в Wayland.
+                </p>
+            </div>
+        </div>
+
+        <!-- Форма добавления отзыва с интерактивным выбором рейтинга -->
+        <form class="mt-8 pt-6 border-t border-brand-border" onsubmit="event.preventDefault();">
+            <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Оставить отзыв</h4>
+
+            <!-- Интерактивные звезды -->
+            <div class="flex items-center gap-1.5 mb-4">
+                <span class="text-xs text-brand-muted mr-1">Ваша оценка:</span>
+                <div class="flex items-center gap-1" id="star-rating-container">
+                    <button type="button" class="star-btn text-slate-600 hover:text-amber-400 transition-colors" data-value="1">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </button>
+                    <button type="button" class="star-btn text-slate-600 hover:text-amber-400 transition-colors" data-value="2">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </button>
+                    <button type="button" class="star-btn text-slate-600 hover:text-amber-400 transition-colors" data-value="3">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </button>
+                    <button type="button" class="star-btn text-slate-600 hover:text-amber-400 transition-colors" data-value="4">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </button>
+                    <button type="button" class="star-btn text-slate-600 hover:text-amber-400 transition-colors" data-value="5">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </button>
                 </div>
             </div>
-            <div class="bar-container">
-                <div class="bar-label">
-                    <span>Ноутбуки того же класса</span>
-                    <strong>10.1 W</strong>
-                </div>
-                <div class="bar-outer">
-                    <div class="bar-inner competitor" style="width: 100%">10.1W</div>
-                </div>
-            </div>
-        </div>
 
-    </div>
+            <textarea class="w-full min-h-[100px] p-4 bg-[#0B0F19]/40 border border-brand-border text-slate-200 rounded focus:outline-none focus:border-brand-accent/50 text-xs md:text-sm mb-4" placeholder="Напишите комментарий..."></textarea>
+            <button class="bg-[#1E293B] hover:bg-slate-700 text-white border border-brand-border px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Отправить</button>
+        </form>
+    </section>
+</main>
 
-    <!-- ТАБЛИЦА СОВМЕСТИМОСТИ КОМПОНЕНТОВ -->
-    <h2 class="section-title">Совместимость аппаратных модулей</h2>
-    <div class="specs-table-wrapper">
-        <table class="specs-table">
-            <thead>
-            <tr>
-                <th>Компонент</th>
-                <th>Драйвер / Модуль ядра</th>
-                <th>Статус</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="specs-label">Процессор (P-States)</td>
-                <td class="specs-value">intel_pstate / amd-pstate (в зависимости от ревизии)</td>
-                <td style="color: var(--success-color); font-weight: bold;">OK (Полное масштабирование)</td>
-            </tr>
-            <tr>
-                <td class="specs-label">Wi-Fi & Bluetooth</td>
-                <td class="specs-value">iwlwifi (Kernel 6.8+)</td>
-                <td style="color: var(--success-color); font-weight: bold;">OK</td>
-            </tr>
-            <tr>
-                <td class="specs-label">Видеокарта</td>
-                <td class="specs-value">i915 / amdgpu (Драйверы с открытым кодом)</td>
-                <td style="color: var(--success-color); font-weight: bold;">OK (Wayland / X11)</td>
-            </tr>
-            <tr>
-                <td class="specs-label">Сканер отпечатков</td>
-                <td class="specs-value">libfprint (Поддерживается в GDM/SDDM)</td>
-                <td style="color: var(--success-color); font-weight: bold;">OK</td>
-            </tr>
-            <tr>
-                <td class="specs-label">Аудиокодек</td>
-                <td class="specs-value">snd_hda_intel (PipeWire / PulseAudio)</td>
-                <td style="color: var(--success-color); font-weight: bold;">OK</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- ОТЗЫВЫ РАЗРАБОТЧИКОВ И ИНЖЕНЕРОВ -->
-    <h2 class="section-title">Комментарии и отчеты пользователей</h2>
-    <div class="comments-box">
-
-        <div class="comment-item">
-            <div class="comment-meta">
-                <span class="comment-author">dev_architect_99</span>
-                <span class="comment-date">Вчера, 18:24</span>
-            </div>
-            <p class="comment-text">Накатил Arch Linux с ядром Zen. Ноутбук работает превосходно. Автономность в режиме кодинга составляет около 12 часов с включенным Wi-Fi и яркостью экрана на 50%. Спящий режим (S3) работает корректно через ACPI.</p>
-        </div>
-
-        <div class="comment-item">
-            <div class="comment-meta">
-                <span class="comment-author">sys_admin_nix</span>
-                <span class="comment-date">3 дня назад</span>
-            </div>
-            <p class="comment-text">На Fedora 44 всё завелось прямо из коробки. Проверил Bluetooth-наушники и внешний монитор через Type-C (DP Alt Mode) — никаких проблем. Отличный рабочий инструмент для системных инженеров.</p>
-        </div>
-
-        <!-- Форма отправки отчета -->
-        <div class="comment-form">
-            <h3>Добавить отчет о тестировании или комментарий</h3>
-            <textarea class="form-textarea" placeholder="Укажите ваш дистрибутив, версию ядра Linux и опишите стабильность работы модулей..."></textarea>
-            <button class="action-btn" style="border: none; cursor: pointer;">Отправить отчет</button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- ПОДВАЛ ПОРТАЛА -->
-<footer class="site-footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h4>LinHardware</h4>
-                <p>Открытая база данных совместимости компьютерного оборудования с операционными системами на базе ядра Linux.</p>
-            </div>
-            <div class="footer-col">
-                <h5>Навигация</h5>
-                <ul class="footer-links">
-                    <li><a href="#">База устройств</a></li>
-                    <li><a href="#">Поиск по PCI ID</a></li>
-                    <li><a href="#">Гайды по установке</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>Ресурсы</h5>
-                <ul class="footer-links">
-                    <li><a href="#">Arch Wiki</a></li>
-                    <li><a href="#">Kernel.org</a></li>
-                    <li><a href="#">LKML (Рассылка ядра)</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>О проекте</h5>
-                <ul class="footer-links">
-                    <li><a href="#">О нас</a></li>
-                    <li><a href="#">GitHub Репозиторий</a></li>
-                    <li><a href="#">API доступа</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2026 LinHardware. Данные распространяются под лицензией CC BY-SA 4.0.</p>
-            <p>База поддерживается сообществом.</p>
+<!-- === FOOTER === -->
+<footer class="bg-[#0B0F19] text-brand-muted border-t border-brand-border pt-12 pb-6 text-xs mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <p>© 2026 LinHardware. Лаборатория верификации оборудования.</p>
+        <div class="flex gap-6">
+            <a href="#" class="hover:text-white transition-colors">Спецификация API</a>
+            <a href="#" class="hover:text-white transition-colors">Правила платформы</a>
         </div>
     </div>
 </footer>
 
+<!-- Скрипты интерфейса -->
+<script>
+    // Мобильное меню
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+    });
+
+    // Логика интерактивного рейтинга звездами
+    const stars = document.querySelectorAll('.star-btn');
+    let currentRating = 0;
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            currentRating = parseInt(star.getAttribute('data-value'));
+            updateStars(currentRating);
+        });
+
+        star.addEventListener('mouseenter', () => {
+            const hoverValue = parseInt(star.getAttribute('data-value'));
+            updateStars(hoverValue);
+        });
+    });
+
+    document.getElementById('star-rating-container').addEventListener('mouseleave', () => {
+        updateStars(currentRating);
+    });
+
+    function updateStars(rating) {
+        stars.forEach(star => {
+            const val = parseInt(star.getAttribute('data-value'));
+            if (val <= rating) {
+                star.className = "star-btn text-amber-400 transition-colors";
+            } else {
+                star.className = "star-btn text-slate-600 transition-colors";
+            }
+        });
+    }
+</script>
 </body>
 </html>

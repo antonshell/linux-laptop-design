@@ -3,545 +3,638 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест совместимости: Zenith X1 Pro на Fedora Workstation 44 — LinHardware</title>
+    <title>LinHardware — Hardware Probe Test D6E0C6C0AC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0B0F19',
+                            surface: '#131B2E',
+                            accent: '#10B981',
+                            'accent-hover': '#059669',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            muted: '#94A3B8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* === ПЕРЕМЕННЫЕ ДИЗАЙН-СИСТЕМЫ === */
-        :root {
-            --primary-color: #6366f1;       /* Indigo */
-            --primary-hover: #4f46e5;
-            --success-color: #10b981;       /* Зеленый (Работает из коробки) */
-            --warning-color: #f59e0b;       /* Оранжевый (Требует твиков) */
-            --danger-color: #ef4444;        /* Красный (Не работает) */
-            --dark-bg: #0b0f19;
-            --light-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --radius: 12px;
-            --font-mono: "Fira Code", "Source Code Pro", Menlo, Monaco, Consolas, monospace;
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: var(--text-main);
-            background-color: var(--light-bg);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            background-color: #0B0F19;
+            color: #E2E8F0;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-
-        /* === HEADER === */
-        .site-header {
-            background-color: var(--dark-bg);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
         }
-        .header-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
         }
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #ffffff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .logo span {
-            color: var(--primary-color);
-        }
-        .main-nav {
-            display: flex;
-            gap: 24px;
-        }
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: #ffffff;
-        }
-
-        /* === HERO: ТЕСТ-ДРАЙВ СВЯЗКИ === */
-        .test-hero {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 40px;
-            margin: 40px 0;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 40px;
-            align-items: center;
-        }
-        .hero-left {
-            text-align: center;
-        }
-        .laptop-svg {
-            width: 100%;
-            max-width: 380px;
-            height: auto;
-            filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.4));
-            margin-bottom: 20px;
-        }
-        .score-badge {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: var(--success-color);
-            padding: 15px 30px;
-            border-radius: var(--radius);
-        }
-        .score-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            line-height: 1;
-        }
-        .score-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
-            font-weight: 700;
-        }
-
-        .hero-right h1 {
-            font-size: 2rem;
-            margin: 0 0 10px 0;
-            color: #ffffff;
-        }
-        .test-meta-pills {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 24px;
-        }
-        .meta-pill {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .meta-pill strong {
-            color: #ffffff;
-        }
-
-        /* === ТАБЛИЦА СОВМЕСТИМОСТИ КОМПОНЕНТОВ === */
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin: 40px 0 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .matrix-table-wrapper {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 40px;
-        }
-        .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-        .matrix-table th {
-            background-color: rgba(255, 255, 255, 0.02);
-            padding: 16px 20px;
-            font-size: 0.95rem;
-            border-bottom: 1px solid var(--border-color);
-            color: #ffffff;
-        }
-        .matrix-table td {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
-        }
-        .matrix-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Статусы совместимости */
-        .status-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 6px;
-            text-transform: uppercase;
-        }
-        .status-tag.works {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-        .status-tag.tweak {
-            background-color: rgba(245, 158, 11, 0.1);
-            color: var(--warning-color);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-        }
-        .status-tag.broken {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: var(--danger-color);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        /* === БЛОК С ЛОГАМИ И КОНСОЛЬНЫМИ ДАННЫМИ === */
-        .log-accordion {
-            margin-bottom: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background-color: var(--card-bg);
-            overflow: hidden;
-        }
-        .log-accordion summary {
-            padding: 16px 20px;
-            font-weight: 600;
-            cursor: pointer;
-            user-select: none;
-            outline: none;
-            color: #ffffff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .log-accordion summary::-webkit-details-marker {
-            display: none;
-        }
-        .log-accordion[open] summary {
-            border-bottom: 1px solid var(--border-color);
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-        .log-content {
-            padding: 20px;
-            background-color: #020617;
-            margin: 0;
-            overflow-x: auto;
-        }
-        .code-block {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: #a5f3fc;
-            margin: 0;
-            white-space: pre;
-        }
-
-        /* === ФОРМА ОБРАТНОЙ СВЯЗИ === */
-        .feedback-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 30px;
-            margin: 40px 0 60px 0;
-        }
-        .feedback-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-        .form-input, .form-textarea {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 12px;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 0.95rem;
-        }
-        .form-input:focus, .form-textarea:focus {
-            outline: 2px solid var(--primary-color);
-            border-color: transparent;
-        }
-        .submit-btn {
-            background-color: var(--primary-color);
-            color: #ffffff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            justify-self: start;
-        }
-        .submit-btn:hover {
-            background-color: var(--primary-hover);
-        }
-
-        /* === FOOTER === */
-        .site-footer {
-            background-color: var(--dark-bg);
-            color: var(--text-muted);
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 992px) {
-            .test-hero {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .feedback-form {
-                grid-template-columns: 1fr;
-            }
-            .form-group.full-width {
-                grid-column: span 1;
-            }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 185, 129, 0.4);
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen font-sans">
 
-<!-- ШАПКА ПОРТАЛА -->
-<header class="site-header">
-    <div class="container header-wrapper">
-        <a href="#" class="logo">Lin<span>Hardware</span></a>
-        <nav class="main-nav">
-            <a href="#" class="nav-link">База устройств</a>
-            <a href="#" class="nav-link">Статистика ядер</a>
-            <a href="#" class="nav-link active">Отчеты тестов</a>
-            <a href="#" class="nav-link">Инструкции</a>
-        </nav>
-        <a href="#" class="action-btn" style="background-color: var(--primary-color); color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Загрузить отчет</a>
+<!-- Header -->
+<header class="border-b border-brand-border bg-brand-surface/50 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-accent shadow-[0_0_12px_#10B981]"></span>
+            <span class="font-mono tracking-wider text-white font-bold">LinHardware</span>
+        </a>
+        <div class="flex items-center gap-6 text-sm text-brand-muted">
+            <span class="font-mono bg-brand-bg px-3 py-1.5 rounded border border-brand-border text-brand-accent">PROBE: d6e0c6c0ac</span>
+        </div>
     </div>
 </header>
 
-<main class="container">
+<main class="max-w-7xl mx-auto px-4 py-8">
 
-    <!-- HERO СВЯЗКИ -->
-    <section class="test-hero">
-        <div class="hero-left">
-            <!-- SVG Ноутбука -->
-            <svg class="laptop-svg" viewBox="0 0 480 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="70" y="20" width="340" height="210" rx="10" fill="#020617" />
-                <rect x="78" y="28" width="324" height="194" rx="4" fill="#0b0f19" />
-                <!-- Обои на экране стилизованы под синий брендинг Fedora -->
-                <path d="M78 180 C 180 120, 240 240, 402 140 L 402 222 L 78 222 Z" fill="#3b82f6" opacity="0.3"/>
-                <circle cx="240" cy="110" r="50" fill="#2563eb" opacity="0.2" filter="blur(15px)"/>
-                <circle cx="240" cy="24" r="2" fill="#475569" />
-                <path d="M30 232 L 450 232 L 464 246 C 464 249, 450 252, 440 252 L 40 252 C 30 252, 16 249, 16 246 Z" fill="#475569" />
-                <rect x="64" y="235" width="352" height="8" rx="2" fill="#1e293b" />
-                <rect x="200" y="244" width="80" height="6" rx="1" fill="#334155" />
-                <path d="M40 252 L 440 252 L 430 255 L 50 255 Z" fill="#000000" opacity="0.6" />
-            </svg>
-
-            <div class="score-badge">
-                <span class="score-value">98%</span>
-                <span class="score-label">Совместимость</span>
-            </div>
+    <!-- Summary Dashboard (Top Grid) -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-brand-surface border border-brand-border rounded-xl p-5">
+            <div class="text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">Компьютер / Модель</div>
+            <div class="text-lg font-semibold text-white">ASUS ROG Zephyrus G14</div>
+            <div class="text-xs font-mono text-brand-accent mt-2">GA402RJ • Laptop</div>
         </div>
-
-        <div class="hero-right">
-            <h1>Zenith X1 Pro на Fedora Workstation 44</h1>
-            <div class="test-meta-pills">
-                <div class="meta-pill">Ядро: <strong>Linux 6.11.2-300.fc44</strong></div>
-                <div class="meta-pill">DE: <strong>GNOME 47 (Wayland)</strong></div>
-                <div class="meta-pill">Статус: <strong>Platinum / Certified</strong></div>
-            </div>
-            <p class="hero-description" style="margin: 0 0 20px 0;">
-                Тест проведен на серийном образце Zenith X1 Pro ревизии 2026 года. Практически идеальное поведение оборудования «из коробки». Энергосбережение корректно отрабатывает через профили <code>power-profiles-daemon</code>, переключения графики происходят бесшовно.
-            </p>
-            <div class="meta-pill" style="display: inline-block;">Протестировано пользователем: <strong>@sys_admin_nix</strong> (08.02.2026)</div>
+        <div class="bg-brand-surface border border-brand-border rounded-xl p-5">
+            <div class="text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">ОС / Ядро</div>
+            <div class="text-lg font-semibold text-white">Ubuntu 24.04 LTS</div>
+            <div class="text-xs font-mono text-slate-400 mt-2">Linux 6.8.0-43-generic</div>
         </div>
-    </section>
-
-    <!-- ТАБЛИЦА ХАРАКТЕРИСТИК СТЕНДА -->
-    <h2 class="section-title">Тестовая конфигурация железа</h2>
-    <div class="matrix-table-wrapper">
-        <table class="matrix-table">
-            <tbody>
-            <tr>
-                <td style="width: 30%; font-weight: 600;">Процессор (CPU)</td>
-                <td>Zenith-Silicon OctaCore @ 4.80GHz (8 Cores / 16 Threads)</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 600;">Графика (GPU)</td>
-                <td>Neural Graphics Core + Intel Iris Xe Graphics (Интегрированная гибридная схема)</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 600;">Оперативная память</td>
-                <td>32 GB LPDDR5X (6400 MT/s)</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 600;">Wi-Fi адаптер</td>
-                <td>Intel Wi-Fi 7 BE200 (2x2)</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="bg-brand-surface border border-brand-border rounded-xl p-5">
+            <div class="text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">Дата тестирования</div>
+            <div class="text-lg font-semibold text-white">16 июля 2026</div>
+            <div class="text-xs font-mono text-slate-400 mt-2">12:34:11 UTC via hw-probe</div>
+        </div>
+        <div class="bg-brand-surface border border-brand-border rounded-xl p-5">
+            <div class="text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">Статус оборудования</div>
+            <div class="text-lg font-semibold text-brand-accent flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
+                28 / 30 Рабочих
+            </div>
+            <div class="text-xs font-mono text-slate-400 mt-2">2 устройства требуют внимания</div>
+        </div>
     </div>
 
-    <!-- ТАБЛИЦА СОВМЕСТИМОСТИ КОМПОНЕНТОВ -->
-    <h2 class="section-title">Карта аппаратной совместимости (Hardware Audit)</h2>
-    <div class="matrix-table-wrapper">
-        <table class="matrix-table">
-            <thead>
-            <tr>
-                <th>Устройство</th>
-                <th>Драйвер / Модуль ядра</th>
-                <th>Статус</th>
-                <th>Примечание</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td style="font-weight: 600;">Дисплей (OLED 120Hz)</td>
-                <td><code>i915</code> / <code>amdgpu</code></td>
-                <td><span class="status-tag works">Works</span></td>
-                <td>Регулировка яркости, VRR и 120Hz работают идеально через Wayland.</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 600;">Wi-Fi & Bluetooth</td>
-                <td><code>iwlwifi</code> / <code>btintel</code></td>
-                <td><span class="status-tag works">Works</span></td>
-                <td>Полная скорость Wi-Fi 7 на ядре 6.11 без установки сторонних прошивок.</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 600;">Звуковая подсистема</td>
-                <td><code>snd_sof_pci_intel</code> (PipeWire)</td>
-                <td><span class="status-tag works">Works</span></td>
-                <td>Встроенные динамики и микрофон работают отлично. Звук чистый.</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 600;">Сканер отпечатков</td>
-                <td><code>fprintd</code> / USB-ID: 27c6:550a</td>
-                <td><span class="status-tag tweak">Tweak</span></td>
-                <td>Работает в GDM/sudo после сопряжения через утилиту <code>fprintd-enroll</code>.</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 600;">Сон / Энергосбережение</td>
-                <td><code>ACPI / platform_profile</code></td>
-                <td><span class="status-tag works">Works</span></td>
-                <td>Глубокий сон (S3) отрабатывает корректно. Потеря заряда за 10 часов сна — около 2%.</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 600;">Датчик освещения (ALS)</td>
-                <td><code>iio_sysfs_trigger</code></td>
-                <td><span class="status-tag broken">Broken</span></td>
-                <td>На текущем ядре датчик определяется, но не передает данные об освещенности.</td>
-            </tr>
-            </tbody>
-        </table>
+    <!-- Main Layout Split -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+
+        <!-- Left Side: Hardware & Drivers Tree (2 Columns Wide) -->
+        <div class="lg:col-span-2 space-y-6">
+
+            <!-- Section: Core Hardware List -->
+            <div class="bg-brand-surface border border-brand-border rounded-xl overflow-hidden">
+                <div class="border-b border-brand-border bg-brand-bg/40 px-5 py-4 flex justify-between items-center">
+                    <h2 class="text-sm font-mono uppercase tracking-wider font-semibold text-white">Аппаратные компоненты и драйверы</h2>
+                    <span class="text-xs font-mono text-brand-muted">lspci / lsusb snapshot</span>
+                </div>
+
+                <div class="divide-y divide-brand-border font-mono text-xs">
+                    <!-- Row 1: CPU -->
+                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-brand-muted font-bold">PROCESSOR</div>
+                        <div class="col-span-6">
+                            <div class="text-white font-sans text-sm font-semibold">AMD Ryzen 7 6800HS</div>
+                            <div class="text-[11px] text-brand-muted mt-0.5">8 Cores / 16 Threads @ 4.7GHz Max</div>
+                        </div>
+                        <div class="col-span-3 text-right">
+                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">k10temp</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: GPU 1 -->
+                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-brand-muted font-bold">GRAPHICS (INT)</div>
+                        <div class="col-span-6">
+                            <div class="text-white font-sans text-sm font-semibold">AMD Radeon 680M</div>
+                            <div class="text-[11px] text-brand-muted mt-0.5">Rembrandt [1002:1681]</div>
+                        </div>
+                        <div class="col-span-3 text-right">
+                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">amdgpu</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: GPU 2 -->
+                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-brand-muted font-bold">GRAPHICS (DIS)</div>
+                        <div class="col-span-6">
+                            <div class="text-white font-sans text-sm font-semibold">AMD Radeon RX 6700S</div>
+                            <div class="text-[11px] text-brand-muted mt-0.5">Navi 23 [1002:73ef]</div>
+                        </div>
+                        <div class="col-span-3 text-right">
+                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">amdgpu</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Network Wireless -->
+                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-brand-muted font-bold">WIRELESS</div>
+                        <div class="col-span-6">
+                            <div class="text-white font-sans text-sm font-semibold">MediaTek MT7922 802.11ax</div>
+                            <div class="text-[11px] text-brand-muted mt-0.5">Wi-Fi 6E Wireless Network Adapter</div>
+                        </div>
+                        <div class="col-span-3 text-right">
+                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">mt7921e</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Audio -->
+                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-brand-muted font-bold">AUDIO</div>
+                        <div class="col-span-6">
+                            <div class="text-white font-sans text-sm font-semibold">Rembrandt Radeon High Definition Audio</div>
+                            <div class="text-[11px] text-brand-muted mt-0.5">Advanced Micro Devices, Inc.</div>
+                        </div>
+                        <div class="col-span-3 text-right">
+                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">snd_hda_intel</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 6: Storage NVMe -->
+                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-brand-muted font-bold">STORAGE</div>
+                        <div class="col-span-6">
+                            <div class="text-white font-sans text-sm font-semibold">Micron 2450 NVMe 1TB</div>
+                            <div class="text-[11px] text-brand-muted mt-0.5">MTFDKBA1T0TFK [144d:a80a]</div>
+                        </div>
+                        <div class="col-span-3 text-right">
+                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">nvme</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 7: Bluetooth -->
+                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-brand-muted font-bold">BLUETOOTH</div>
+                        <div class="col-span-6">
+                            <div class="text-white font-sans text-sm font-semibold">MediaTek Bluetooth Adapter</div>
+                            <div class="text-[11px] text-brand-muted mt-0.5">USB Device [0e8d:0616]</div>
+                        </div>
+                        <div class="col-span-3 text-right">
+                            <span class="px-2 py-1 rounded bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">btusb (error)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Runtime Tests / Diagnostics -->
+            <div class="bg-brand-surface border border-brand-border rounded-xl overflow-hidden">
+                <div class="border-b border-brand-border bg-brand-bg/40 px-5 py-4">
+                    <h2 class="text-sm font-mono uppercase tracking-wider font-semibold text-white">Результаты тестов работоспособности (Logs Analysis)</h2>
+                </div>
+                <div class="p-5 font-mono text-xs space-y-4">
+                    <div class="flex justify-between items-start border-b border-brand-border/40 pb-3">
+                        <div>
+                            <div class="text-white font-sans text-sm font-medium">dmesg log check</div>
+                            <div class="text-brand-muted mt-0.5">Поиск критических ошибок ACPI и ядра</div>
+                        </div>
+                        <span class="text-brand-accent font-bold bg-brand-accent/10 px-2 py-0.5 rounded border border-brand-accent/20">PASSED</span>
+                    </div>
+                    <div class="flex justify-between items-start border-b border-brand-border/40 pb-3">
+                        <div>
+                            <div class="text-white font-sans text-sm font-medium">SMART Storage Health</div>
+                            <div class="text-brand-muted mt-0.5">Анализ атрибутов накопителя Micron NVMe</div>
+                        </div>
+                        <span class="text-brand-accent font-bold bg-brand-accent/10 px-2 py-0.5 rounded border border-brand-accent/20">HEALTHY</span>
+                    </div>
+                    <div class="flex justify-between items-start border-b border-brand-border/40 pb-3">
+                        <div>
+                            <div class="text-white font-sans text-sm font-medium">Suspend / Resume Test</div>
+                            <div class="text-brand-muted mt-0.5">Глубокий сон S3 / Modern Standby</div>
+                        </div>
+                        <span class="text-brand-accent font-bold bg-brand-accent/10 px-2 py-0.5 rounded border border-brand-accent/20">WORKS</span>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="text-white font-sans text-sm font-medium">Bluetooth Service Sync</div>
+                            <div class="text-brand-muted mt-0.5">Ошибка hci0: command 0x0101 tx timeout</div>
+                        </div>
+                        <span class="text-red-400 font-bold bg-red-400/10 px-2 py-0.5 rounded border border-red-400/20">FAILED</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Side: Sidebar Meta Information -->
+        <div class="space-y-6">
+
+            <!-- System Architecture & Environment Info Box -->
+            <div class="bg-brand-surface border border-brand-border rounded-xl p-5 font-mono text-xs">
+                <h3 class="text-sm uppercase tracking-wider text-white font-semibold mb-4 border-b border-brand-border pb-2">Системное окружение</h3>
+                <div class="space-y-3">
+                    <div>
+                        <span class="text-brand-muted block">Архитектура:</span>
+                        <span class="text-white font-medium font-sans">x86_64 (64 bit)</span>
+                    </div>
+                    <div>
+                        <span class="text-brand-muted block">Режим загрузки:</span>
+                        <span class="text-white font-medium font-sans">EFI (Secure Boot: Enabled)</span>
+                    </div>
+                    <div>
+                        <span class="text-brand-muted block">Версия BIOS:</span>
+                        <span class="text-white font-medium">ASUS GA402RJ.318 (05/11/2024)</span>
+                    </div>
+                    <div>
+                        <span class="text-brand-muted block">Сервер отображения:</span>
+                        <span class="text-white font-medium font-sans">Wayland (GNOME Shell 46.0)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hardware Metrics (Quick Stats) -->
+            <div class="bg-brand-surface border border-brand-border rounded-xl p-5 font-mono text-xs">
+                <h3 class="text-sm uppercase tracking-wider text-white font-semibold mb-4 border-b border-brand-border pb-2">Статистика Probe</h3>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-brand-muted mb-1">
+                            <span>Всего устройств (PCI/USB):</span>
+                            <span class="text-white">30</span>
+                        </div>
+                        <div class="w-full bg-brand-bg rounded-full h-1.5 border border-brand-border">
+                            <div class="bg-brand-accent h-1.5 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-brand-muted mb-1">
+                            <span>Найдено драйверов в ядре:</span>
+                            <span class="text-brand-accent">28 / 30</span>
+                        </div>
+                        <div class="w-full bg-brand-bg rounded-full h-1.5 border border-brand-border">
+                            <div class="bg-brand-accent h-1.5 rounded-full" style="width: 93.3%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-brand-muted mb-1">
+                            <span>Ошибки в подсистемах:</span>
+                            <span class="text-red-400">1</span>
+                        </div>
+                        <div class="w-full bg-brand-bg rounded-full h-1.5 border border-brand-border">
+                            <div class="bg-red-500 h-1.5 rounded-full" style="width: 3.3%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="bg-gradient-to-br from-brand-surface to-brand-bg border border-brand-border rounded-xl p-5 text-center">
+                <p class="text-xs text-brand-muted mb-4 font-mono">Этот отчет сгенерирован утилитой hw-probe и является постоянным слепком конфигурации оборудования.</p>
+                <button class="w-full bg-brand-accent hover:bg-brand-accent-hover text-brand-bg font-mono font-bold py-2.5 px-4 rounded-lg transition-colors text-xs uppercase tracking-wider shadow-[0_4px_20px_rgba(16,185,129,0.15)]">
+                    Скачать сырой лог (JSON)
+                </button>
+            </div>
+
+        </div>
     </div>
 
-    <!-- ЛОГИ ЯДРА И БЕНЧМАРКИ -->
-    <h2 class="section-title">Системные логи и выводы тестов (Logs & Diagnostics)</h2>
+    <!-- NEW SYSTEM LOGS INTERFACE: "IDE Style File Tree" -->
+    <div class="bg-brand-surface border border-brand-border rounded-xl overflow-hidden shadow-2xl">
 
-    <details class="log-accordion">
-        <summary>Вывод утилиты powertop (Энергопотребление под нагрузкой) <span>Развернуть ↴</span></summary>
-        <div class="log-content">
-                <pre class="code-block">
-The battery reports a discharge rate of 4.12 W
-System Baseline Power: 4.12 W (Screen brightness 40%, Wi-Fi connected, idle)
-
-Usage      Events/s    Category       Description
-21.4%                  Device         Display backlight
- 4.2%                  Device         Intel(R) Wi-Fi 7 BE200
- 1.1%        23.4      CPU Core       Processor Core I/O
-                </pre>
-        </div>
-    </details>
-
-    <details class="log-accordion">
-        <summary>Строки dmesg (Инициализация Wi-Fi 7 модуля) <span>Развернуть ↴</span></summary>
-        <div class="log-content">
-                <pre class="code-block">
-[    2.148902] iwlwifi 0000:00:14.3: enabling device (0000 -> 0002)
-[    2.152431] iwlwifi 0000:00:14.3: Loaded firmware version 89.0c1a93ff.0 be-a0-hr-b0-89.ucode
-[    2.155829] iwlwifi 0000:00:14.3: Detected Intel(R) Wi-Fi 7 BE200 320MHz, REV=0x340
-[    2.189320] iwlwifi 0000:00:14.3: base HW address: e4:a8:df:12:bc:aa
-                </pre>
-        </div>
-    </details>
-
-    <details class="log-accordion">
-        <summary>Отчет lshw (Раздел мультимедиа / Аудио) <span>Развернуть ↴</span></summary>
-        <div class="log-content">
-                <pre class="code-block">
-*-multimedia
-     description: Audio device
-     product: Raptor Lake-P/U/H cAVS
-     vendor: Intel Corporation
-     physical id: 1f.3
-     bus info: pci@0000:00:1f.3
-     version: 01
-     width: 64 bits
-     clock: 33MHz
-     capabilities: pm msi bus_master cap_list
-     configuration: driver=sof-audio-pci-intel-tgl latency=32
-                </pre>
-        </div>
-    </details>
-
-    <!-- ОТПРАВКА СВОЕГО ОТЧЕТА -->
-    <section class="feedback-section">
-        <h2 style="margin: 0; color: #ffffff; font-size: 1.3rem;">У вас другая конфигурация или дистрибутив?</h2>
-        <p style="color: var(--text-muted); margin: 8px 0 20px 0;">Отправьте ваш отчет тестирования совместимости (вывод lshw/dmesg), чтобы дополнить общую базу знаний.</p>
-
-        <form class="feedback-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Спасибо! Отчет отправлен на модерацию.');">
-            <div class="form-group">
-                <label for="distro" style="font-size: 0.9rem; font-weight: 600;">Используемый дистрибутив</label>
-                <input type="text" id="distro" class="form-input" placeholder="Например, Arch Linux, Ubuntu 26.04" required>
+        <!-- Top Controls Bar -->
+        <div class="border-b border-brand-border bg-brand-bg/50 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+                    <h2 class="text-sm font-mono uppercase tracking-wider font-bold text-white">Журналы Системы и Окружения (System Logs Directory)</h2>
+                </div>
+                <p class="text-xs text-brand-muted mt-1 font-sans">Исследование системных файлов, сетевых логов, X11/Wayland и дампов устройств</p>
             </div>
-            <div class="form-group">
-                <label for="kernel" style="font-size: 0.9rem; font-weight: 600;">Версия ядра (uname -r)</label>
-                <input type="text" id="kernel" class="form-input" placeholder="Например, 6.12.1-zen" required>
+
+            <!-- Quick Search (Grep Simulator) -->
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-brand-muted">grep:</span>
+                <input type="text" id="logSearch" placeholder="Фильтр строк..." class="bg-brand-bg text-white border border-brand-border rounded px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-accent w-48 transition-colors">
             </div>
-            <div class="form-group full-width">
-                <label for="message" style="font-size: 0.9rem; font-weight: 600;">Ваш комментарий / Проблемные модули</label>
-                <textarea id="message" class="form-textarea" placeholder="Опишите, какие компоненты заработали из коробки, а для каких пришлось писать костыли или прописывать параметры загрузки ядра..." required></textarea>
+        </div>
+
+        <!-- Main Log Workspace -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 min-h-[500px]">
+
+            <!-- Left Sidebar: File Tree Explorer -->
+            <div class="lg:col-span-1 bg-brand-bg/40 border-r border-brand-border p-4 custom-scrollbar overflow-y-auto max-h-[500px]">
+                <div class="text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-4">Каталог логов (/var/log/*)</div>
+
+                <div class="space-y-4 font-mono text-xs select-none">
+
+                    <!-- Group 1: Core System -->
+                    <div>
+                        <div class="flex items-center gap-1.5 text-slate-400 font-semibold mb-1">
+                            <span>📁</span>
+                            <span>System Core</span>
+                        </div>
+                        <div class="pl-4 space-y-0.5">
+                            <button onclick="selectLogFile('dmesg')" id="file-dmesg" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-accent bg-brand-accent/10 border border-brand-accent/10 text-left">
+                                <span>📄 dmesg</span>
+                                <span class="text-[9px] bg-red-500/20 text-red-400 px-1 rounded">1 error</span>
+                            </button>
+                            <button onclick="selectLogFile('syslog')" id="file-syslog" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 syslog</span>
+                            </button>
+                            <button onclick="selectLogFile('journal')" id="file-journal" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 journalctl -b</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: Graphics -->
+                    <div>
+                        <div class="flex items-center gap-1.5 text-slate-400 font-semibold mb-1">
+                            <span>📁</span>
+                            <span>Graphics & Display</span>
+                        </div>
+                        <div class="pl-4 space-y-0.5">
+                            <button onclick="selectLogFile('xorg')" id="file-xorg" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 Xorg.0.log</span>
+                                <span class="text-[9px] bg-yellow-500/20 text-yellow-500 px-1 rounded">1 warn</span>
+                            </button>
+                            <button onclick="selectLogFile('wayland')" id="file-wayland" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 wayland-session</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Group 3: Hardware Details -->
+                    <div>
+                        <div class="flex items-center gap-1.5 text-slate-400 font-semibold mb-1">
+                            <span>📁</span>
+                            <span>Hardware Dumps</span>
+                        </div>
+                        <div class="pl-4 space-y-0.5">
+                            <button onclick="selectLogFile('lspci')" id="file-lspci" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 lspci -vvv</span>
+                            </button>
+                            <button onclick="selectLogFile('lsusb')" id="file-lsusb" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 lsusb -v</span>
+                            </button>
+                            <button onclick="selectLogFile('cpuinfo')" id="file-cpuinfo" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 /proc/cpuinfo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Group 4: Network & Audio -->
+                    <div>
+                        <div class="flex items-center gap-1.5 text-slate-400 font-semibold mb-1">
+                            <span>📁</span>
+                            <span>Services</span>
+                        </div>
+                        <div class="pl-4 space-y-0.5">
+                            <button onclick="selectLogFile('acpid')" id="file-acpid" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 acpid.log</span>
+                            </button>
+                            <button onclick="selectLogFile('alsa')" id="file-alsa" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                                <span>📄 alsa-info.txt</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <button type="submit" class="submit-btn full-width">Отправить отчет тестирования</button>
-        </form>
-    </section>
+
+            <!-- Right Terminal Window (3 Columns Wide) -->
+            <div class="lg:col-span-3 bg-black/40 flex flex-col justify-between overflow-hidden">
+
+                <!-- Terminal Toolbar Tab -->
+                <div class="bg-brand-bg/60 border-b border-brand-border/60 px-4 py-2.5 flex items-center justify-between text-xs font-mono">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-block w-3 h-3 text-brand-accent">📂</span>
+                        <span id="terminalFilePath" class="text-white font-medium">/var/log/dmesg</span>
+                    </div>
+                    <div class="flex items-center gap-4 text-brand-muted text-[11px]">
+                        <span id="lineCount">Lines: 12</span>
+                        <span class="bg-brand-bg px-2 py-0.5 rounded border border-brand-border">READ-ONLY</span>
+                    </div>
+                </div>
+
+                <!-- Terminal Console Area -->
+                <pre id="terminalConsole" class="p-4 overflow-y-auto max-h-[410px] min-h-[410px] custom-scrollbar font-mono text-[11px] leading-relaxed select-text space-y-1 bg-brand-bg/10"></pre>
+
+                <!-- Terminal Status Bar -->
+                <div class="bg-brand-bg/40 border-t border-brand-border/60 px-4 py-2 flex items-center justify-between text-[10px] font-mono text-brand-muted">
+                    <div class="flex items-center gap-3">
+                        <span>Status: <span class="text-brand-accent">200 OK</span></span>
+                        <span>Matched: <span id="matchCounter" class="text-white">12</span></span>
+                    </div>
+                    <span>UTF-8</span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 </main>
 
-<!-- ПОДВАЛ ПОРТАЛА -->
-<footer class="site-footer">
-    <div class="container">
-        <p>© 2026 LinHardware Database. Информация собирается и проверяется системными администраторами со всего мира.</p>
+<!-- Footer -->
+<footer class="border-t border-brand-border mt-16 bg-brand-surface/20">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-brand-muted">
+        <div>&copy; 2026 LinHardware. Inspired by Linux Hardware Database.</div>
+        <div class="flex gap-6">
+            <a href="#" class="hover:text-white transition-colors">Документация</a>
+            <a href="#" class="hover:text-white transition-colors">API</a>
+            <a href="#" class="hover:text-white transition-colors">GitHub</a>
+        </div>
     </div>
 </footer>
 
+<!-- Interactive File Tree Script -->
+<script>
+    // Большая база логов для симуляции реального окружения linux-hardware.org
+    const rawLogsDatabase = {
+        dmesg: {
+            path: '/var/log/dmesg',
+            lines: [
+                { t: "[    0.000000] Linux version 6.8.0-43-generic (buildd@lcy02-amd64-076) (gcc version 13.2.0)", type: "info" },
+                { t: "[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-43-generic root=UUID=a45f quiet splash", type: "info" },
+                { t: "[    0.124512] x86/fpu: Supporting XSAVE feature 0x001: 'x87 floating point registers'", type: "info" },
+                { t: "[    0.541223] ACPI: Core revision 20230628", type: "info" },
+                { t: "[    1.002495] pci 0000:00:01.0: PME# supported from D3hot D3cold", type: "info" },
+                { t: "[    2.148520] amdgpu 0000:04:00.0: amdgpu: Trusted Memory Zone (TMZ) feature enabled", type: "info" },
+                { t: "[    2.894101] usb 1-1: New USB device found, idVendor=0e8d, idProduct=0616, bcdDevice=1.00", type: "info" },
+                { t: "[    3.110245] mt7921e 0000:02:00.0: ASIC revision: 79220001", type: "info" },
+                { t: "[    4.569812] ACPI WARNING: \\_SB.PR00._CPC: Return SubPackage has incorrect count: 12", type: "warn" },
+                { t: "[    5.102478] EXT4-fs (nvme0n1p2): mounted filesystem with ordered data mode.", type: "info" },
+                { t: "[    7.842104] bluetooth hci0: command 0x0101 tx timeout, synchronous controller hang!", type: "error" },
+                { t: "[    8.912445] systemd[1]: Started Journal Service.", type: "info" }
+            ]
+        },
+        syslog: {
+            path: '/var/log/syslog',
+            lines: [
+                { t: "Jul 16 12:34:11 hostname rsyslogd: [origin software=\"rsyslogd\" swVersion=\"8.2312.0\"] start", type: "info" },
+                { t: "Jul 16 12:34:12 hostname systemd[1]: Starting Network Manager...", type: "info" },
+                { t: "Jul 16 12:34:13 hostname dhclient[612]: DHCPDISCOVER on wlan0 to 255.255.255.255 port 67", type: "info" },
+                { t: "Jul 16 12:34:14 hostname dhclient[612]: DHCPOFFER of 192.168.1.154 from 192.168.1.1", type: "info" },
+                { t: "Jul 16 12:34:14 hostname NetworkManager[521]: <info> [1689510854.01] device (wlan0): state change: ip-config -> activated", type: "info" },
+                { t: "Jul 16 12:34:15 hostname systemd[1]: Started Network Manager.", type: "info" }
+            ]
+        },
+        journal: {
+            path: 'journalctl -b',
+            lines: [
+                { t: "-- Journal begins at Tue 2026-06-02, ends at Thu 2026-07-16 --", type: "info" },
+                { t: "Jul 16 12:34:11 systemd[1]: Booting...", type: "info" },
+                { t: "Jul 16 12:34:11 systemd-journald[210]: Received SIGTERM from systemd.", type: "info" },
+                { t: "Jul 16 12:34:13 systemd-udevd[312]: Program '/usr/bin/x86_64-linux-gnu-modeset' failed", type: "warn" },
+                { t: "Jul 16 12:34:15 accounts-daemon[582]: Started Accounts Service", type: "info" }
+            ]
+        },
+        xorg: {
+            path: '/var/log/Xorg.0.log',
+            lines: [
+                { t: "[    24.105] (II) xorg Gregorian Calendar Date: 2024-04-12", type: "info" },
+                { t: "[    24.105] (II) Loader running on linux", type: "info" },
+                { t: "[    24.106] (==) Log file: \"/var/log/Xorg.0.log\", Time: Thu Jul 16 12:34:20 2026", type: "info" },
+                { t: "[    24.110] (==) Using config file: \"/etc/X11/xorg.conf\"", type: "info" },
+                { t: "[    24.150] (II) glamor: OpenGL accelerated X.org driver based on egl", type: "info" },
+                { t: "[    24.489] (EE) AMDGPU(0): failed to set mode: Invalid argument", type: "error" },
+                { t: "[    24.612] (WW) Warning, could not open property page for synaptics touchpad core pointer", type: "warn" },
+                { t: "[    25.002] (II) config/udev: Adding input device HDA ATI HDMI (/dev/input/event5)", type: "info" }
+            ]
+        },
+        wayland: {
+            path: 'dbus-run-session wayland',
+            lines: [
+                { t: "[gnome-shell] Wayland registry client connected", type: "info" },
+                { t: "[gnome-shell] Using Wayland display connection 'wayland-0'", type: "info" },
+                { t: "[gnome-shell] GNOME Shell started on Wayland", type: "info" },
+                { t: "[mutter] DRM device /dev/dri/card1 opened successfully", type: "info" }
+            ]
+        },
+        lspci: {
+            path: 'lspci -vvv',
+            lines: [
+                { t: "00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir Root Complex", type: "info" },
+                { t: "00:01.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] Renoir PCIe GPP Bridge", type: "info" },
+                { t: "01:00.0 Non-Volatile memory controller: Micron Technology Inc Device a80a (rev 01)", type: "info" },
+                { t: "\tSubsystem: Micron Technology Inc Device a80a", type: "info" },
+                { t: "\tFlags: bus master, fast devsel, latency 0, IRQ 65, NUMA node 0", type: "info" },
+                { t: "\tCapabilities: [40] Power Management version 3", type: "info" },
+                { t: "02:00.0 Network controller: MediaTek Device 7922", type: "info" }
+            ]
+        },
+        lsusb: {
+            path: 'lsusb -v',
+            lines: [
+                { t: "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub", type: "info" },
+                { t: "Device Descriptor:", type: "info" },
+                { t: "  bLength                18", type: "info" },
+                { t: "  bDescriptorType         1", type: "info" },
+                { t: "  bcdUSB               2.00", type: "info" },
+                { t: "Bus 001 Device 003: ID 0e8d:0616 MediaTek Inc. Bluetooth Adapter", type: "info" }
+            ]
+        },
+        cpuinfo: {
+            path: '/proc/cpuinfo',
+            lines: [
+                { t: "processor\t: 0", type: "info" },
+                { t: "vendor_id\t: AuthenticAMD", type: "info" },
+                { t: "cpu family\t: 25", type: "info" },
+                { t: "model\t\t: 68", type: "info" },
+                { t: "model name\t: AMD Ryzen 7 6800HS with Radeon Graphics", type: "info" },
+                { t: "cpu MHz\t\t: 3200.000", type: "info" },
+                { t: "cache size\t: 512 KB", type: "info" }
+            ]
+        },
+        acpid: {
+            path: '/var/log/acpid.log',
+            lines: [
+                { t: "acpid: starting up with netlink layer", type: "info" },
+                { t: "acpid: 1 rule loaded", type: "info" },
+                { t: "acpid: waiting for events: event logging is enabled", type: "info" },
+                { t: "acpid: received event \"button/power PWRF 00000080\"", type: "info" }
+            ]
+        },
+        alsa: {
+            path: 'alsa-info.sh output',
+            lines: [
+                { t: "!!ALSA Information State", type: "info" },
+                { t: "!!----------------------", type: "info" },
+                { t: "Kernel release:    6.8.0-43-generic", type: "info" },
+                { t: "ALSA Version:      Driver w/o Version, Library v1.2.10", type: "info" },
+                { t: "Card: Rembrandt Radeon High Definition Audio", type: "info" }
+            ]
+        }
+    };
+
+    let currentActiveFile = 'dmesg';
+
+    // Рендерер содержимого
+    function renderTerminal() {
+        const consoleEl = document.getElementById("terminalConsole");
+        const filterText = document.getElementById("logSearch").value.toLowerCase();
+        const logData = rawLogsDatabase[currentActiveFile];
+
+        consoleEl.innerHTML = "";
+        let matchCounter = 0;
+
+        document.getElementById("terminalFilePath").textContent = logData.path;
+        document.getElementById("lineCount").textContent = `Lines: ${logData.lines.length}`;
+
+        logData.lines.forEach(line => {
+            // Живой поиск
+            if (filterText && !line.t.toLowerCase().includes(filterText)) {
+                return;
+            }
+
+            matchCounter++;
+
+            const div = document.createElement("div");
+            div.className = "py-0.5 px-2 rounded hover:bg-white/5 transition-colors";
+
+            // Подсветка ошибок и предупреждений
+            if (line.type === 'error') {
+                div.className += " text-red-400 font-bold bg-red-950/20";
+            } else if (line.type === 'warn') {
+                div.className += " text-yellow-400";
+            } else {
+                div.className += " text-slate-300";
+            }
+
+            div.textContent = line.t;
+            consoleEl.appendChild(div);
+        });
+
+        document.getElementById("matchCounter").textContent = matchCounter;
+    }
+
+    // Переключение файлов в древовидном списке
+    function selectLogFile(fileKey) {
+        currentActiveFile = fileKey;
+
+        // Сброс оформления со всех кнопок в дереве файлов
+        const buttons = document.querySelectorAll("#file-dmesg, #file-syslog, #file-journal, #file-xorg, #file-wayland, #file-lspci, #file-lsusb, #file-cpuinfo, #file-acpid, #file-alsa");
+        buttons.forEach(btn => {
+            btn.className = "w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left transition-all duration-150";
+        });
+
+        // Подсветка только активной кнопки
+        const activeBtn = document.getElementById(`file-${fileKey}`);
+        if (activeBtn) {
+            activeBtn.className = "w-full flex items-center justify-between py-1 px-2 rounded bg-brand-accent/10 border border-brand-accent/20 text-brand-accent font-semibold text-left transition-all duration-150";
+        }
+
+        renderTerminal();
+    }
+
+    // Подключение реактивного поиска
+    document.getElementById("logSearch").addEventListener("input", renderTerminal);
+
+    // Инициализация
+    document.addEventListener("DOMContentLoaded", () => {
+        renderTerminal();
+    });
+</script>
 </body>
 </html>
