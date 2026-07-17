@@ -5,29 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinHardware — Hardware Probe Test D6E0C6C0AC</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            bg: '#0B0F19',
-                            surface: '#131B2E',
-                            accent: '#10B981',
-                            'accent-hover': '#059669',
-                            border: 'rgba(255, 255, 255, 0.08)',
-                            muted: '#94A3B8'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        body {
-            background-color: #0B0F19;
-            color: #E2E8F0;
-        }
+        /*body {
+            background-color: #0f172a; !* slate-900 *!
+            color: #e2e8f0; !* slate-200 *!
+        }*/
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -44,17 +26,17 @@
         }
     </style>
 </head>
-<body class="min-h-screen font-sans">
+<body class="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-400">
 
 <!-- Header -->
-<header class="border-b border-brand-border bg-brand-surface/50 backdrop-blur sticky top-0 z-50">
+<header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <a href="#" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-accent shadow-[0_0_12px_#10B981]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10B981]"></span>
             <span class="font-mono tracking-wider text-white font-bold">LinHardware</span>
         </a>
-        <div class="flex items-center gap-6 text-sm text-brand-muted">
-            <span class="font-mono bg-brand-bg px-3 py-1.5 rounded border border-brand-border text-brand-accent">PROBE: d6e0c6c0ac</span>
+        <div class="flex items-center gap-6 text-sm text-slate-400">
+            <span class="font-mono bg-slate-950 px-3 py-1.5 rounded border border-slate-800 text-emerald-400">PROBE: d6e0c6c0ac</span>
         </div>
     </div>
 </header>
@@ -69,20 +51,20 @@
             <a href="index.html" class="hover:text-zinc-300">ASUS ROG Zephyrus G14</a> /
             <span class="text-zinc-400">PROBE: d6e0c6c0ac</span>
         </div>
-        <h1 class="text-3xl font-extrabold tracking-tight">PROBE: d6e0c6c0ac</h1>
+        <h1 class="text-3xl font-extrabold tracking-tight text-white">PROBE: d6e0c6c0ac</h1>
         <p class="text-sm text-zinc-400 mt-1">ASUS ROG Zephyrus G14</p>
     </div>
 
     <!-- Summary Dashboard (Top Grid) -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div class="bg-brand-surface border border-brand-border rounded-xl p-5">
-            <div class="text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">Компьютер / Модель</div>
+        <div class="bg-slate-800/60 border border-slate-800 rounded-xl p-5">
+            <div class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-1">Компьютер / Модель</div>
             <div class="text-lg font-semibold text-white">ASUS ROG Zephyrus G14</div>
-            <div class="text-xs font-mono text-brand-accent mt-2">GA402RJ • Laptop</div>
+            <div class="text-xs font-mono text-emerald-400 mt-2">GA402RJ • Laptop</div>
         </div>
-        <div class="bg-brand-surface border border-brand-border rounded-xl p-5 flex items-start justify-between">
+        <div class="bg-slate-800/60 border border-slate-800 rounded-xl p-5 flex items-start justify-between">
             <div>
-                <div class="text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">ОС / Ядро</div>
+                <div class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-1">ОС / Ядро</div>
                 <div class="text-lg font-semibold text-white">Ubuntu 24.04 LTS</div>
                 <div class="text-xs font-mono text-slate-400 mt-2">Linux 6.8.0-43-generic</div>
             </div>
@@ -93,15 +75,15 @@
                 </svg>
             </div>
         </div>
-        <div class="bg-brand-surface border border-brand-border rounded-xl p-5">
-            <div class="text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">Дата тестирования</div>
+        <div class="bg-slate-800/60 border border-slate-800 rounded-xl p-5">
+            <div class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-1">Дата тестирования</div>
             <div class="text-lg font-semibold text-white">16 июля 2026</div>
             <div class="text-xs font-mono text-slate-400 mt-2">12:34:11 UTC via hw-probe</div>
         </div>
-        <div class="bg-brand-surface border border-brand-border rounded-xl p-5">
-            <div class="text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">Статус оборудования</div>
-            <div class="text-lg font-semibold text-brand-accent flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
+        <div class="bg-slate-800/60 border border-slate-800 rounded-xl p-5">
+            <div class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-1">Статус оборудования</div>
+            <div class="text-lg font-semibold text-emerald-400 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 28 / 30 Рабочих
             </div>
             <div class="text-xs font-mono text-slate-400 mt-2">2 устройства требуют внимания</div>
@@ -115,91 +97,91 @@
         <div class="lg:col-span-2 space-y-6">
 
             <!-- Section: Core Hardware List -->
-            <div class="bg-brand-surface border border-brand-border rounded-xl overflow-hidden">
-                <div class="border-b border-brand-border bg-brand-bg/40 px-5 py-4 flex justify-between items-center">
+            <div class="bg-slate-800/60 border border-slate-800 rounded-xl overflow-hidden">
+                <div class="border-b border-slate-800 bg-slate-900/40 px-5 py-4 flex justify-between items-center">
                     <h2 class="text-sm font-mono uppercase tracking-wider font-semibold text-white">Аппаратные компоненты и драйверы</h2>
-                    <span class="text-xs font-mono text-brand-muted">lspci / lsusb snapshot</span>
+                    <span class="text-xs font-mono text-slate-400">lspci / lsusb snapshot</span>
                 </div>
 
-                <div class="divide-y divide-brand-border font-mono text-xs">
+                <div class="divide-y divide-slate-800 font-mono text-xs">
                     <!-- Row 1: CPU -->
-                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
-                        <div class="col-span-3 text-brand-muted font-bold">PROCESSOR</div>
+                    <div class="p-4 hover:bg-slate-900/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-slate-400 font-bold">PROCESSOR</div>
                         <div class="col-span-6">
                             <div class="text-white font-sans text-sm font-semibold">AMD Ryzen 7 6800HS</div>
-                            <div class="text-[11px] text-brand-muted mt-0.5">8 Cores / 16 Threads @ 4.7GHz Max</div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">8 Cores / 16 Threads @ 4.7GHz Max</div>
                         </div>
                         <div class="col-span-3 text-right">
-                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">k10temp</span>
+                            <span class="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">k10temp</span>
                         </div>
                     </div>
 
                     <!-- Row 2: GPU 1 -->
-                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
-                        <div class="col-span-3 text-brand-muted font-bold">GRAPHICS (INT)</div>
+                    <div class="p-4 hover:bg-slate-900/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-slate-400 font-bold">GRAPHICS (INT)</div>
                         <div class="col-span-6">
                             <div class="text-white font-sans text-sm font-semibold">AMD Radeon 680M</div>
-                            <div class="text-[11px] text-brand-muted mt-0.5">Rembrandt [1002:1681]</div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">Rembrandt [1002:1681]</div>
                         </div>
                         <div class="col-span-3 text-right">
-                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">amdgpu</span>
+                            <span class="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">amdgpu</span>
                         </div>
                     </div>
 
                     <!-- Row 3: GPU 2 -->
-                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
-                        <div class="col-span-3 text-brand-muted font-bold">GRAPHICS (DIS)</div>
+                    <div class="p-4 hover:bg-slate-900/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-slate-400 font-bold">GRAPHICS (DIS)</div>
                         <div class="col-span-6">
                             <div class="text-white font-sans text-sm font-semibold">AMD Radeon RX 6700S</div>
-                            <div class="text-[11px] text-brand-muted mt-0.5">Navi 23 [1002:73ef]</div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">Navi 23 [1002:73ef]</div>
                         </div>
                         <div class="col-span-3 text-right">
-                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">amdgpu</span>
+                            <span class="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">amdgpu</span>
                         </div>
                     </div>
 
                     <!-- Row 4: Network Wireless -->
-                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
-                        <div class="col-span-3 text-brand-muted font-bold">WIRELESS</div>
+                    <div class="p-4 hover:bg-slate-900/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-slate-400 font-bold">WIRELESS</div>
                         <div class="col-span-6">
                             <div class="text-white font-sans text-sm font-semibold">MediaTek MT7922 802.11ax</div>
-                            <div class="text-[11px] text-brand-muted mt-0.5">Wi-Fi 6E Wireless Network Adapter</div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">Wi-Fi 6E Wireless Network Adapter</div>
                         </div>
                         <div class="col-span-3 text-right">
-                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">mt7921e</span>
+                            <span class="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">mt7921e</span>
                         </div>
                     </div>
 
                     <!-- Row 5: Audio -->
-                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
-                        <div class="col-span-3 text-brand-muted font-bold">AUDIO</div>
+                    <div class="p-4 hover:bg-slate-900/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-slate-400 font-bold">AUDIO</div>
                         <div class="col-span-6">
                             <div class="text-white font-sans text-sm font-semibold">Rembrandt Radeon High Definition Audio</div>
-                            <div class="text-[11px] text-brand-muted mt-0.5">Advanced Micro Devices, Inc.</div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">Advanced Micro Devices, Inc.</div>
                         </div>
                         <div class="col-span-3 text-right">
-                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">snd_hda_intel</span>
+                            <span class="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">snd_hda_intel</span>
                         </div>
                     </div>
 
                     <!-- Row 6: Storage NVMe -->
-                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
-                        <div class="col-span-3 text-brand-muted font-bold">STORAGE</div>
+                    <div class="p-4 hover:bg-slate-900/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-slate-400 font-bold">STORAGE</div>
                         <div class="col-span-6">
                             <div class="text-white font-sans text-sm font-semibold">Micron 2450 NVMe 1TB</div>
-                            <div class="text-[11px] text-brand-muted mt-0.5">MTFDKBA1T0TFK [144d:a80a]</div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">MTFDKBA1T0TFK [144d:a80a]</div>
                         </div>
                         <div class="col-span-3 text-right">
-                            <span class="px-2 py-1 rounded bg-brand-accent/10 text-brand-accent border border-brand-accent/20">nvme</span>
+                            <span class="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">nvme</span>
                         </div>
                     </div>
 
                     <!-- Row 7: Bluetooth -->
-                    <div class="p-4 hover:bg-brand-bg/20 transition-colors grid grid-cols-12 gap-4 items-center">
-                        <div class="col-span-3 text-brand-muted font-bold">BLUETOOTH</div>
+                    <div class="p-4 hover:bg-slate-900/20 transition-colors grid grid-cols-12 gap-4 items-center">
+                        <div class="col-span-3 text-slate-400 font-bold">BLUETOOTH</div>
                         <div class="col-span-6">
                             <div class="text-white font-sans text-sm font-semibold">MediaTek Bluetooth Adapter</div>
-                            <div class="text-[11px] text-brand-muted mt-0.5">USB Device [0e8d:0616]</div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">USB Device [0e8d:0616]</div>
                         </div>
                         <div class="col-span-3 text-right">
                             <span class="px-2 py-1 rounded bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">btusb (error)</span>
@@ -209,36 +191,36 @@
             </div>
 
             <!-- Section: Runtime Tests / Diagnostics -->
-            <div class="bg-brand-surface border border-brand-border rounded-xl overflow-hidden">
-                <div class="border-b border-brand-border bg-brand-bg/40 px-5 py-4">
+            <div class="bg-slate-800/60 border border-slate-800 rounded-xl overflow-hidden">
+                <div class="border-b border-slate-800 bg-slate-900/40 px-5 py-4">
                     <h2 class="text-sm font-mono uppercase tracking-wider font-semibold text-white">Результаты тестов работоспособности (Logs Analysis)</h2>
                 </div>
                 <div class="p-5 font-mono text-xs space-y-4">
-                    <div class="flex justify-between items-start border-b border-brand-border/40 pb-3">
+                    <div class="flex justify-between items-start border-b border-slate-800/40 pb-3">
                         <div>
                             <div class="text-white font-sans text-sm font-medium">dmesg log check</div>
-                            <div class="text-brand-muted mt-0.5">Поиск критических ошибок ACPI и ядра</div>
+                            <div class="text-slate-400 mt-0.5">Поиск критических ошибок ACPI и ядра</div>
                         </div>
-                        <span class="text-brand-accent font-bold bg-brand-accent/10 px-2 py-0.5 rounded border border-brand-accent/20">PASSED</span>
+                        <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">PASSED</span>
                     </div>
-                    <div class="flex justify-between items-start border-b border-brand-border/40 pb-3">
+                    <div class="flex justify-between items-start border-b border-slate-800/40 pb-3">
                         <div>
                             <div class="text-white font-sans text-sm font-medium">SMART Storage Health</div>
-                            <div class="text-brand-muted mt-0.5">Анализ атрибутов накопителя Micron NVMe</div>
+                            <div class="text-slate-400 mt-0.5">Анализ атрибутов накопителя Micron NVMe</div>
                         </div>
-                        <span class="text-brand-accent font-bold bg-brand-accent/10 px-2 py-0.5 rounded border border-brand-accent/20">HEALTHY</span>
+                        <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">HEALTHY</span>
                     </div>
-                    <div class="flex justify-between items-start border-b border-brand-border/40 pb-3">
+                    <div class="flex justify-between items-start border-b border-slate-800/40 pb-3">
                         <div>
                             <div class="text-white font-sans text-sm font-medium">Suspend / Resume Test</div>
-                            <div class="text-brand-muted mt-0.5">Глубокий сон S3 / Modern Standby</div>
+                            <div class="text-slate-400 mt-0.5">Глубокий сон S3 / Modern Standby</div>
                         </div>
-                        <span class="text-brand-accent font-bold bg-brand-accent/10 px-2 py-0.5 rounded border border-brand-accent/20">WORKS</span>
+                        <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">WORKS</span>
                     </div>
                     <div class="flex justify-between items-start">
                         <div>
                             <div class="text-white font-sans text-sm font-medium">Bluetooth Service Sync</div>
-                            <div class="text-brand-muted mt-0.5">Ошибка hci0: command 0x0101 tx timeout</div>
+                            <div class="text-slate-400 mt-0.5">Ошибка hci0: command 0x0101 tx timeout</div>
                         </div>
                         <span class="text-red-400 font-bold bg-red-400/10 px-2 py-0.5 rounded border border-red-400/20">FAILED</span>
                     </div>
@@ -251,56 +233,56 @@
         <div class="space-y-6">
 
             <!-- System Architecture & Environment Info Box -->
-            <div class="bg-brand-surface border border-brand-border rounded-xl p-5 font-mono text-xs">
-                <h3 class="text-sm uppercase tracking-wider text-white font-semibold mb-4 border-b border-brand-border pb-2">Системное окружение</h3>
+            <div class="bg-slate-800/60 border border-slate-800 rounded-xl p-5 font-mono text-xs">
+                <h3 class="text-sm uppercase tracking-wider text-white font-semibold mb-4 border-b border-slate-800 pb-2">Системное окружение</h3>
                 <div class="space-y-3">
                     <div>
-                        <span class="text-brand-muted block">Архитектура:</span>
+                        <span class="text-slate-400 block">Архитектура:</span>
                         <span class="text-white font-medium font-sans">x86_64 (64 bit)</span>
                     </div>
                     <div>
-                        <span class="text-brand-muted block">Режим загрузки:</span>
+                        <span class="text-slate-400 block">Режим загрузки:</span>
                         <span class="text-white font-medium font-sans">EFI (Secure Boot: Enabled)</span>
                     </div>
                     <div>
-                        <span class="text-brand-muted block">Версия BIOS:</span>
+                        <span class="text-slate-400 block">Версия BIOS:</span>
                         <span class="text-white font-medium">ASUS GA402RJ.318 (05/11/2024)</span>
                     </div>
                     <div>
-                        <span class="text-brand-muted block">Сервер отображения:</span>
+                        <span class="text-slate-400 block">Сервер отображения:</span>
                         <span class="text-white font-medium font-sans">Wayland (GNOME Shell 46.0)</span>
                     </div>
                 </div>
             </div>
 
             <!-- Hardware Metrics (Quick Stats) -->
-            <div class="bg-brand-surface border border-brand-border rounded-xl p-5 font-mono text-xs">
-                <h3 class="text-sm uppercase tracking-wider text-white font-semibold mb-4 border-b border-brand-border pb-2">Статистика Probe</h3>
+            <div class="bg-slate-800/60 border border-slate-800 rounded-xl p-5 font-mono text-xs">
+                <h3 class="text-sm uppercase tracking-wider text-white font-semibold mb-4 border-b border-slate-800 pb-2">Статистика Probe</h3>
                 <div class="space-y-4">
                     <div>
-                        <div class="flex justify-between text-brand-muted mb-1">
+                        <div class="flex justify-between text-slate-400 mb-1">
                             <span>Всего устройств (PCI/USB):</span>
                             <span class="text-white">30</span>
                         </div>
-                        <div class="w-full bg-brand-bg rounded-full h-1.5 border border-brand-border">
-                            <div class="bg-brand-accent h-1.5 rounded-full" style="width: 100%"></div>
+                        <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
+                            <div class="bg-emerald-500 h-1.5 rounded-full" style="width: 100%"></div>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-brand-muted mb-1">
+                        <div class="flex justify-between text-slate-400 mb-1">
                             <span>Найдено драйверов в ядре:</span>
-                            <span class="text-brand-accent">28 / 30</span>
+                            <span class="text-emerald-400">28 / 30</span>
                         </div>
-                        <div class="w-full bg-brand-bg rounded-full h-1.5 border border-brand-border">
-                            <div class="bg-brand-accent h-1.5 rounded-full" style="width: 93.3%"></div>
+                        <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
+                            <div class="bg-emerald-500 h-1.5 rounded-full" style="width: 93.3%"></div>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between text-brand-muted mb-1">
+                        <div class="flex justify-between text-slate-400 mb-1">
                             <span>Ошибки в подсистемах:</span>
                             <span class="text-red-400">1</span>
                         </div>
-                        <div class="w-full bg-brand-bg rounded-full h-1.5 border border-brand-border">
+                        <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
                             <div class="bg-red-500 h-1.5 rounded-full" style="width: 3.3%"></div>
                         </div>
                     </div>
@@ -308,9 +290,9 @@
             </div>
 
             <!-- Action Button -->
-            <div class="bg-gradient-to-br from-brand-surface to-brand-bg border border-brand-border rounded-xl p-5 text-center">
-                <p class="text-xs text-brand-muted mb-4 font-mono">Этот отчет сгенерирован утилитой hw-probe и является постоянным слепком конфигурации оборудования.</p>
-                <button class="w-full bg-brand-accent hover:bg-brand-accent-hover text-brand-bg font-mono font-bold py-2.5 px-4 rounded-lg transition-colors text-xs uppercase tracking-wider shadow-[0_4px_20px_rgba(16,185,129,0.15)]">
+            <div class="bg-gradient-to-br from-slate-800/60 to-slate-900 border border-slate-800 rounded-xl p-5 text-center">
+                <p class="text-xs text-slate-400 mb-4 font-mono">Этот отчет сгенерирован утилитой hw-probe и является постоянным слепком конфигурации оборудования.</p>
+                <button class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-mono font-bold py-2.5 px-4 rounded-lg transition-colors text-xs uppercase tracking-wider shadow-[0_4px_20px_rgba(16,185,129,0.15)]">
                     Скачать сырой лог (JSON)
                 </button>
             </div>
@@ -319,22 +301,22 @@
     </div>
 
     <!-- NEW SYSTEM LOGS INTERFACE: "IDE Style File Tree" -->
-    <div class="bg-brand-surface border border-brand-border rounded-xl overflow-hidden shadow-2xl">
+    <div class="bg-slate-800/60 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
 
         <!-- Top Controls Bar -->
-        <div class="border-b border-brand-border bg-brand-bg/50 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="border-b border-slate-800 bg-slate-900/50 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                     <h2 class="text-sm font-mono uppercase tracking-wider font-bold text-white">Журналы Системы и Окружения (System Logs Directory)</h2>
                 </div>
-                <p class="text-xs text-brand-muted mt-1 font-sans">Исследование системных файлов, сетевых логов, X11/Wayland и дампов устройств</p>
+                <p class="text-xs text-slate-400 mt-1 font-sans">Исследование системных файлов, сетевых логов, X11/Wayland и дампов устройств</p>
             </div>
 
             <!-- Quick Search (Grep Simulator) -->
             <div class="flex items-center gap-2">
-                <span class="text-xs font-mono text-brand-muted">grep:</span>
-                <input type="text" id="logSearch" placeholder="Фильтр строк..." class="bg-brand-bg text-white border border-brand-border rounded px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-accent w-48 transition-colors">
+                <span class="text-xs font-mono text-slate-400">grep:</span>
+                <input type="text" id="logSearch" placeholder="Фильтр строк..." class="bg-slate-950 text-white border border-slate-800 rounded px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-emerald-500 w-48 transition-colors">
             </div>
         </div>
 
@@ -342,8 +324,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 min-h-[500px]">
 
             <!-- Left Sidebar: File Tree Explorer -->
-            <div class="lg:col-span-1 bg-brand-bg/40 border-r border-brand-border p-4 custom-scrollbar overflow-y-auto max-h-[500px]">
-                <div class="text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-4">Каталог логов (/var/log/*)</div>
+            <div class="lg:col-span-1 bg-slate-900/40 border-r border-slate-800 p-4 custom-scrollbar overflow-y-auto max-h-[500px]">
+                <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-4">Каталог логов (/var/log/*)</div>
 
                 <div class="space-y-4 font-mono text-xs select-none">
 
@@ -354,14 +336,14 @@
                             <span>System Core</span>
                         </div>
                         <div class="pl-4 space-y-0.5">
-                            <button onclick="selectLogFile('dmesg')" id="file-dmesg" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-accent bg-brand-accent/10 border border-brand-accent/10 text-left">
+                            <button onclick="selectLogFile('dmesg')" id="file-dmesg" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-emerald-400 bg-emerald-500/10 border border-emerald-500/10 text-left">
                                 <span>📄 dmesg</span>
                                 <span class="text-[9px] bg-red-500/20 text-red-400 px-1 rounded">1 error</span>
                             </button>
-                            <button onclick="selectLogFile('syslog')" id="file-syslog" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('syslog')" id="file-syslog" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 syslog</span>
                             </button>
-                            <button onclick="selectLogFile('journal')" id="file-journal" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('journal')" id="file-journal" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 journalctl -b</span>
                             </button>
                         </div>
@@ -374,11 +356,11 @@
                             <span>Graphics & Display</span>
                         </div>
                         <div class="pl-4 space-y-0.5">
-                            <button onclick="selectLogFile('xorg')" id="file-xorg" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('xorg')" id="file-xorg" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 Xorg.0.log</span>
                                 <span class="text-[9px] bg-yellow-500/20 text-yellow-500 px-1 rounded">1 warn</span>
                             </button>
-                            <button onclick="selectLogFile('wayland')" id="file-wayland" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('wayland')" id="file-wayland" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 wayland-session</span>
                             </button>
                         </div>
@@ -391,13 +373,13 @@
                             <span>Hardware Dumps</span>
                         </div>
                         <div class="pl-4 space-y-0.5">
-                            <button onclick="selectLogFile('lspci')" id="file-lspci" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('lspci')" id="file-lspci" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 lspci -vvv</span>
                             </button>
-                            <button onclick="selectLogFile('lsusb')" id="file-lsusb" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('lsusb')" id="file-lsusb" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 lsusb -v</span>
                             </button>
-                            <button onclick="selectLogFile('cpuinfo')" id="file-cpuinfo" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('cpuinfo')" id="file-cpuinfo" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 /proc/cpuinfo</span>
                             </button>
                         </div>
@@ -410,10 +392,10 @@
                             <span>Services</span>
                         </div>
                         <div class="pl-4 space-y-0.5">
-                            <button onclick="selectLogFile('acpid')" id="file-acpid" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('acpid')" id="file-acpid" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 acpid.log</span>
                             </button>
-                            <button onclick="selectLogFile('alsa')" id="file-alsa" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left">
+                            <button onclick="selectLogFile('alsa')" id="file-alsa" class="w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left">
                                 <span>📄 alsa-info.txt</span>
                             </button>
                         </div>
@@ -426,24 +408,24 @@
             <div class="lg:col-span-3 bg-black/40 flex flex-col justify-between overflow-hidden">
 
                 <!-- Terminal Toolbar Tab -->
-                <div class="bg-brand-bg/60 border-b border-brand-border/60 px-4 py-2.5 flex items-center justify-between text-xs font-mono">
+                <div class="bg-slate-900/60 border-b border-slate-800 px-4 py-2.5 flex items-center justify-between text-xs font-mono">
                     <div class="flex items-center gap-2">
-                        <span class="inline-block w-3 h-3 text-brand-accent">📂</span>
+                        <span class="inline-block w-3 h-3 text-emerald-400">📂</span>
                         <span id="terminalFilePath" class="text-white font-medium">/var/log/dmesg</span>
                     </div>
-                    <div class="flex items-center gap-4 text-brand-muted text-[11px]">
+                    <div class="flex items-center gap-4 text-slate-400 text-[11px]">
                         <span id="lineCount">Lines: 12</span>
-                        <span class="bg-brand-bg px-2 py-0.5 rounded border border-brand-border">READ-ONLY</span>
+                        <span class="bg-slate-950 px-2 py-0.5 rounded border border-slate-800">READ-ONLY</span>
                     </div>
                 </div>
 
                 <!-- Terminal Console Area -->
-                <pre id="terminalConsole" class="p-4 overflow-y-auto max-h-[410px] min-h-[410px] custom-scrollbar font-mono text-[11px] leading-relaxed select-text space-y-1 bg-brand-bg/10"></pre>
+                <pre id="terminalConsole" class="p-4 overflow-y-auto max-h-[410px] min-h-[410px] custom-scrollbar font-mono text-[11px] leading-relaxed select-text space-y-1 bg-slate-950/10"></pre>
 
                 <!-- Terminal Status Bar -->
-                <div class="bg-brand-bg/40 border-t border-brand-border/60 px-4 py-2 flex items-center justify-between text-[10px] font-mono text-brand-muted">
+                <div class="bg-slate-900/40 border-t border-slate-800 px-4 py-2 flex items-center justify-between text-[10px] font-mono text-slate-400">
                     <div class="flex items-center gap-3">
-                        <span>Status: <span class="text-brand-accent">200 OK</span></span>
+                        <span>Status: <span class="text-emerald-400">200 OK</span></span>
                         <span>Matched: <span id="matchCounter" class="text-white">12</span></span>
                     </div>
                     <span>UTF-8</span>
@@ -457,8 +439,8 @@
 </main>
 
 <!-- Footer -->
-<footer class="border-t border-brand-border mt-16 bg-brand-surface/20">
-    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-brand-muted">
+<footer class="border-t border-slate-800 mt-16 bg-slate-800/20">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
         <div>&copy; 2026 LinHardware. Inspired by Linux Hardware Database.</div>
         <div class="flex gap-6">
             <a href="#" class="hover:text-white transition-colors">Документация</a>
@@ -470,7 +452,6 @@
 
 <!-- Interactive File Tree Script -->
 <script>
-    // Большая база логов для симуляции реального окружения linux-hardware.org
     const rawLogsDatabase = {
         dmesg: {
             path: '/var/log/dmesg',
@@ -515,146 +496,124 @@
             lines: [
                 { t: "[    24.105] (II) xorg Gregorian Calendar Date: 2024-04-12", type: "info" },
                 { t: "[    24.105] (II) Loader running on linux", type: "info" },
-                { t: "[    24.106] (==) Log file: \"/var/log/Xorg.0.log\", Time: Thu Jul 16 12:34:20 2026", type: "info" },
-                { t: "[    24.110] (==) Using config file: \"/etc/X11/xorg.conf\"", type: "info" },
-                { t: "[    24.150] (II) glamor: OpenGL accelerated X.org driver based on egl", type: "info" },
-                { t: "[    24.489] (EE) AMDGPU(0): failed to set mode: Invalid argument", type: "error" },
-                { t: "[    24.612] (WW) Warning, could not open property page for synaptics touchpad core pointer", type: "warn" },
-                { t: "[    25.002] (II) config/udev: Adding input device HDA ATI HDMI (/dev/input/event5)", type: "info" }
+                { t: "[    24.106] (==) Log file: \"/var/log/Xorg.0.log\", Time: Tue Jul 16", type: "info" },
+                { t: "[    24.108] (==) Using config file: \"/etc/X11/xorg.config\"", type: "info" },
+                { t: "[    24.512] (WW) AMDGPU(0): Option \"tearfree\" is not used", type: "warn" },
+                { t: "[    25.002] (II) OpenACK: Touchpad Extension initialized successfully.", type: "info" }
             ]
         },
         wayland: {
-            path: 'dbus-run-session wayland',
+            path: 'wayland-session.log',
             lines: [
-                { t: "[gnome-shell] Wayland registry client connected", type: "info" },
-                { t: "[gnome-shell] Using Wayland display connection 'wayland-0'", type: "info" },
-                { t: "[gnome-shell] GNOME Shell started on Wayland", type: "info" },
-                { t: "[mutter] DRM device /dev/dri/card1 opened successfully", type: "info" }
+                { t: "gnome-shell[1042]: Running GNOME Shell (wayland display mechanical) session", type: "info" },
+                { t: "gnome-shell[1042]: Using Wayland display name 'wayland-0'", type: "info" },
+                { t: "mutter[1042]: Successfully created KMS KMS backend", type: "info" },
+                { t: "gnome-shell[1042]: Xwayland testing support enabled", type: "info" }
             ]
         },
         lspci: {
-            path: 'lspci -vvv',
+            path: 'lspci -vvv snapshot',
             lines: [
-                { t: "00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir Root Complex", type: "info" },
+                { t: "00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne Root Complex", type: "info" },
                 { t: "00:01.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] Renoir PCIe GPP Bridge", type: "info" },
-                { t: "01:00.0 Non-Volatile memory controller: Micron Technology Inc Device a80a (rev 01)", type: "info" },
-                { t: "\tSubsystem: Micron Technology Inc Device a80a", type: "info" },
-                { t: "\tFlags: bus master, fast devsel, latency 0, IRQ 65, NUMA node 0", type: "info" },
-                { t: "\tCapabilities: [40] Power Management version 3", type: "info" },
-                { t: "02:00.0 Network controller: MediaTek Device 7922", type: "info" }
+                { t: "02:00.0 Network controller: MediaTek Device 7922 (rev 01)", type: "info" },
+                { t: "04:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Rembrandt [Radeon 680M] (rev c1)", type: "info" },
+                { t: "05:00.0 Display controller: Advanced Micro Devices, Inc. [AMD/ATI] Navi 23 [Radeon RX 6700S] (rev df)", type: "info" }
             ]
         },
         lsusb: {
-            path: 'lsusb -v',
+            path: 'lsusb -v snapshot',
             lines: [
                 { t: "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub", type: "info" },
-                { t: "Device Descriptor:", type: "info" },
-                { t: "  bLength                18", type: "info" },
-                { t: "  bDescriptorType         1", type: "info" },
-                { t: "  bcdUSB               2.00", type: "info" },
-                { t: "Bus 001 Device 003: ID 0e8d:0616 MediaTek Inc. Bluetooth Adapter", type: "info" }
+                { t: "Bus 001 Device 002: ID 0e8d:0616 MediaTek Inc. Bluetooth Adapter", type: "info" },
+                { t: "Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub", type: "info" },
+                { t: "Bus 002 Device 003: ID 13d3:56a2 IMC Networks USB Camera", type: "info" }
             ]
         },
         cpuinfo: {
             path: '/proc/cpuinfo',
             lines: [
-                { t: "processor\t: 0", type: "info" },
-                { t: "vendor_id\t: AuthenticAMD", type: "info" },
-                { t: "cpu family\t: 25", type: "info" },
-                { t: "model\t\t: 68", type: "info" },
-                { t: "model name\t: AMD Ryzen 7 6800HS with Radeon Graphics", type: "info" },
-                { t: "cpu MHz\t\t: 3200.000", type: "info" },
-                { t: "cache size\t: 512 KB", type: "info" }
+                { t: "processor       : 0", type: "info" },
+                { t: "vendor_id       : AuthenticAMD", type: "info" },
+                { t: "cpu family      : 25", type: "info" },
+                { t: "model           : 68", type: "info" },
+                { t: "model name      : AMD Ryzen 7 6800HS with Radeon Graphics", type: "info" },
+                { t: "cpu MHz         : 3200.000", type: "info" },
+                { t: "cache size      : 512 KB", type: "info" },
+                { t: "siblings        : 16", type: "info" }
             ]
         },
         acpid: {
             path: '/var/log/acpid.log',
             lines: [
-                { t: "acpid: starting up with netlink layer", type: "info" },
-                { t: "acpid: 1 rule loaded", type: "info" },
-                { t: "acpid: waiting for events: event logging is enabled", type: "info" },
-                { t: "acpid: received event \"button/power PWRF 00000080\"", type: "info" }
+                { t: "[Thu Jul 16 12:34:10 2026] acpid: starting up with netlink layer", type: "info" },
+                { t: "[Thu Jul 16 12:34:10 2026] acpid: 1 rule loaded", type: "info" },
+                { t: "[Thu Jul 16 12:34:15 2026] acpid: received input layer event \"button/power PBTN 00000080\"", type: "info" }
             ]
         },
         alsa: {
-            path: 'alsa-info.sh output',
+            path: 'alsa-info.txt dump',
             lines: [
-                { t: "!!ALSA Information State", type: "info" },
-                { t: "!!----------------------", type: "info" },
+                { t: "!!ALSA Information Report Compiled on Thu Jul 16 12:35:00 UTC 2026", type: "info" },
+                { t: "!!Kernel Information", type: "info" },
                 { t: "Kernel release:    6.8.0-43-generic", type: "info" },
-                { t: "ALSA Version:      Driver w/o Version, Library v1.2.10", type: "info" },
-                { t: "Card: Rembrandt Radeon High Definition Audio", type: "info" }
+                { t: "Hardware Modules:  snd_hda_intel, snd_soc_dmic, snd_acp6x_mach", type: "info" }
             ]
         }
     };
 
-    let currentActiveFile = 'dmesg';
+    let currentLogId = 'dmesg';
 
-    // Рендерер содержимого
     function renderTerminal() {
-        const consoleEl = document.getElementById("terminalConsole");
-        const filterText = document.getElementById("logSearch").value.toLowerCase();
-        const logData = rawLogsDatabase[currentActiveFile];
+        const query = document.getElementById('logSearch').value.toLowerCase();
+        const consoleEl = document.getElementById('terminalConsole');
+        const fileData = rawLogsDatabase[currentLogId];
 
-        consoleEl.innerHTML = "";
-        let matchCounter = 0;
+        document.getElementById('terminalFilePath').innerText = fileData.path;
+        document.getElementById('lineCount').innerText = `Lines: ${fileData.lines.length}`;
 
-        document.getElementById("terminalFilePath").textContent = logData.path;
-        document.getElementById("lineCount").textContent = `Lines: ${logData.lines.length}`;
+        consoleEl.innerHTML = '';
+        let matchCount = 0;
 
-        logData.lines.forEach(line => {
-            // Живой поиск
-            if (filterText && !line.t.toLowerCase().includes(filterText)) {
-                return;
-            }
+        fileData.lines.forEach((line) => {
+            if (query && !line.t.toLowerCase().includes(query)) return;
 
-            matchCounter++;
+            matchCount++;
+            const row = document.createElement('div');
+            row.className = 'px-1 py-0.5 rounded transition-colors hover:bg-white/5 whitespace-pre-wrap break-all';
 
-            const div = document.createElement("div");
-            div.className = "py-0.5 px-2 rounded hover:bg-white/5 transition-colors";
-
-            // Подсветка ошибок и предупреждений
             if (line.type === 'error') {
-                div.className += " text-red-400 font-bold bg-red-950/20";
+                row.className += ' text-red-400 bg-red-500/5';
             } else if (line.type === 'warn') {
-                div.className += " text-yellow-400";
+                row.className += ' text-yellow-400 bg-yellow-500/5';
             } else {
-                div.className += " text-slate-300";
+                row.className += ' text-slate-300';
             }
 
-            div.textContent = line.t;
-            consoleEl.appendChild(div);
+            row.innerText = line.t;
+            consoleEl.appendChild(row);
         });
 
-        document.getElementById("matchCounter").textContent = matchCounter;
+        document.getElementById('matchCounter').innerText = matchCount;
     }
 
-    // Переключение файлов в древовидном списке
-    function selectLogFile(fileKey) {
-        currentActiveFile = fileKey;
-
-        // Сброс оформления со всех кнопок в дереве файлов
-        const buttons = document.querySelectorAll("#file-dmesg, #file-syslog, #file-journal, #file-xorg, #file-wayland, #file-lspci, #file-lsusb, #file-cpuinfo, #file-acpid, #file-alsa");
-        buttons.forEach(btn => {
-            btn.className = "w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-brand-muted text-left transition-all duration-150";
+    function selectLogFile(logId) {
+        Object.keys(rawLogsDatabase).forEach(id => {
+            const btn = document.getElementById(`file-${id}`);
+            if (!btn) return;
+            if (id === logId) {
+                btn.className = "w-full flex items-center justify-between py-1 px-2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/10 text-left";
+            } else {
+                btn.className = "w-full flex items-center justify-between py-1 px-2 rounded hover:bg-white/5 text-slate-400 text-left";
+            }
         });
 
-        // Подсветка только активной кнопки
-        const activeBtn = document.getElementById(`file-${fileKey}`);
-        if (activeBtn) {
-            activeBtn.className = "w-full flex items-center justify-between py-1 px-2 rounded bg-brand-accent/10 border border-brand-accent/20 text-brand-accent font-semibold text-left transition-all duration-150";
-        }
-
+        currentLogId = logId;
         renderTerminal();
     }
 
-    // Подключение реактивного поиска
-    document.getElementById("logSearch").addEventListener("input", renderTerminal);
-
-    // Инициализация
-    document.addEventListener("DOMContentLoaded", () => {
-        renderTerminal();
-    });
+    document.getElementById('logSearch').addEventListener('input', renderTerminal);
+    window.addEventListener('DOMContentLoaded', () => selectLogFile('dmesg'));
 </script>
 </body>
 </html>
