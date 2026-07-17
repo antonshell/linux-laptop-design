@@ -28,15 +28,24 @@
 </head>
 <body class="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-400">
 
-<!-- Header -->
-<header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <a href="#" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10B981]"></span>
-            <span class="font-mono tracking-wider text-white font-bold">LinHardware</span>
-        </a>
-        <div class="flex items-center gap-6 text-sm text-slate-400">
-            <span class="font-mono bg-slate-950 px-3 py-1.5 rounded border border-slate-800 text-emerald-400">PROBE: d6e0c6c0ac</span>
+<!-- Навигация -->
+<header class="border-b border-zinc-800/80 bg-zinc-950/50 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-black text-lg transition group-hover:bg-emerald-400">L</div>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">LinCheck</span>
+            </a>
+        </div>
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-zinc-400">
+            <a href="catalog.html" class="hover:text-emerald-400 transition">Каталог</a>
+            <a href="wizard.html" class="hover:text-emerald-400 transition">Подбор ноутбука</a>
+            <a href="compare.html" class="hover:text-emerald-400 transition">Сравнение</a>
+            <a href="about.html" class="hover:text-emerald-400 transition">О нас</a>
+            <a href="contact.html" class="hover:text-emerald-400 transition">Контакты</a>
+        </nav>
+        <div>
+            <a href="#" class="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm font-medium hover:bg-zinc-800 transition">Создать пробу</a>
         </div>
     </div>
 </header>
@@ -47,8 +56,8 @@
     <div class="mb-8">
         <div class="text-xs text-zinc-500 mb-2">
             <a href="index.html" class="hover:text-zinc-300">Главная</a> /
-            <a href="index.html" class="hover:text-zinc-300">Каталог</a> /
-            <a href="index.html" class="hover:text-zinc-300">ASUS ROG Zephyrus G14</a> /
+            <a href="catalog.html" class="hover:text-zinc-300">Каталог</a> /
+            <a href="laptop.html" class="hover:text-zinc-300">ASUS ROG Zephyrus G14</a> /
             <span class="text-zinc-400">PROBE: d6e0c6c0ac</span>
         </div>
         <h1 class="text-3xl font-extrabold tracking-tight text-white">PROBE: d6e0c6c0ac</h1>
@@ -438,14 +447,23 @@
 
 </main>
 
-<!-- Footer -->
-<footer class="border-t border-slate-800 mt-16 bg-slate-800/20">
-    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
-        <div>&copy; 2026 LinHardware. Inspired by Linux Hardware Database.</div>
-        <div class="flex gap-6">
-            <a href="#" class="hover:text-white transition-colors">Документация</a>
-            <a href="#" class="hover:text-white transition-colors">API</a>
-            <a href="#" class="hover:text-white transition-colors">GitHub</a>
+<!-- Подвал (Footer) -->
+<footer class="border-t border-zinc-900 bg-zinc-950 py-8 text-center text-xs text-zinc-600">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+        <div>
+            © 2026 LinCheck. Все права защищены.
+        </div>
+        <div class="flex items-center space-x-2 text-zinc-500">
+            <span>Powered by</span>
+            <a href="https://linux-hardware.org/" target="_blank" class="text-zinc-400 hover:text-emerald-400 underline decoration-zinc-700 transition">linux-hardware.org</a>
+            <span>Open Data (CC-BY 4.0)</span>
+        </div>
+        <div class="flex items-center space-x-6">
+            <a href="https://github.com" target="_blank" class="hover:text-zinc-300 transition flex items-center space-x-1">
+                <span>GitHub</span>
+            </a>
+            <a href="privacy.html" class="hover:text-zinc-300 transition">Конфиденциальность</a>
+            <a href="index.html" class="mono hover:text-zinc-300 transition">API</a>
         </div>
     </div>
 </footer>
