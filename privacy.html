@@ -1,10 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика конфиденциальности — LinCheck</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
 </head>
-<body>
+<body class="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-400">
+
+<!-- Навигация -->
+<header class="border-b border-zinc-800/80 bg-zinc-950/50 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-black text-lg transition group-hover:bg-emerald-400">L</div>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">LinCheck</span>
+            </a>
+        </div>
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-zinc-400">
+            <a href="catalog.html" class="hover:text-emerald-400 transition">Каталог</a>
+            <a href="wizard.html" class="hover:text-emerald-400 transition">Подбор ноутбука</a>
+            <a href="compare.html" class="hover:text-emerald-400 transition">Сравнение</a>
+            <a href="about.html" class="hover:text-emerald-400 transition">О нас</a>
+            <a href="contact.html" class="hover:text-emerald-400 transition">Контакты</a>
+        </nav>
+        <div>
+            <a href="#" class="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm font-medium hover:bg-zinc-800 transition">Войти через GitHub</a>
+        </div>
+    </div>
+</header>
+
+<!-- Контент «Политика конфиденциальности» -->
+<main class="flex-grow max-w-3xl mx-auto px-4 py-16 w-full">
+
+    <!-- Заголовок страницы -->
+    <div class="border-b border-zinc-800 pb-8 mb-12">
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-mono bg-zinc-900 text-zinc-400 border border-zinc-800 mb-4">
+      LEGAL // PRIVACY.MD
+    </span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3 text-white">
+            Политика конфиденциальности
+        </h1>
+        <p class="text-xs text-zinc-500 mono">
+            Последнее обновление: 17 июля 2026 г.
+        </p>
+    </div>
+
+    <!-- Текстовые блоки -->
+    <div class="space-y-10 text-zinc-300 font-light leading-relaxed text-sm sm:text-base">
+
+        <!-- Секция 1 -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+                <span class="text-emerald-400 mono text-sm">01.</span> Общие положения
+            </h2>
+            <p>
+                Мы в LinCheck подходим к приватности с инженерной строгостью. Наша главная цель — сбор технической телеметрии для улучшения совместимости Linux с оборудованием. Мы не собираем, не продаем и не используем ваши персональные данные для таргетинга рекламы или профилирования.
+            </p>
+        </section>
+
+        <!-- Секция 2 -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+                <span class="text-emerald-400 mono text-sm">02.</span> Какие данные собирает скрипт анализа?
+            </h2>
+            <p>
+                Когда вы запускаете команду быстрой проверки через терминал (<code class="mono text-xs bg-zinc-900 px-1 py-0.5 rounded text-emerald-400">curl | sh</code>), наш скрипт генерирует обезличенный дамп конфигурации ПК. Этот дамп содержит исключительно технические параметры:
+            </p>
+            <ul class="list-disc pl-5 space-y-1.5 text-zinc-400 text-sm">
+                <li>Идентификаторы PCI и USB устройств (Vendor ID, Device ID);</li>
+                <li>Название модели ноутбука и вендора (например, <span class="mono text-xs text-zinc-300">ASUS ROG Zephyrus</span>);</li>
+                <li>Версию используемого ядра Linux и дистрибутива;</li>
+                <li>Версию BIOS/UEFI и архитектуру процессора;</li>
+                <li>Неконфиденциальные системные логи (выхлопы <span class="mono text-xs text-zinc-300">dmesg</span>, связанные с инициализацией оборудования).</li>
+            </ul>
+            <div class="bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-4 mt-2">
+                <p class="text-xs text-zinc-400">
+                    <strong class="text-emerald-400 font-medium">Важно:</strong> Скрипт автоматически отсекает любые личные маркеры, такие как имена пользователей, пароли, MAC-адреса, ключи шифрования, IP-адреса или содержимое домашних директорий.
+                </p>
+            </div>
+        </section>
+
+        <!-- Секция 3 -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+                <span class="text-emerald-400 mono text-sm">03.</span> Авторизация через GitHub
+            </h2>
+            <p>
+                При использовании входа через OAuth GitHub мы получаем доступ только к вашему публичному идентификатору (ID), аватару и публичному никнейму. Это необходимо исключительно для привязки добавленных вами ноутбуков в вашем личном кабинете и предотвращения спама. В приватные репозитории или к скрытым данным профиля доступ не запрашивается.
+            </p>
+        </section>
+
+        <!-- Секция 4 -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+                <span class="text-emerald-400 mono text-sm">04.</span> Передача данных третьим лицам
+            </h2>
+            <p>
+                Проект LinCheck агрегирует данные и может обмениваться обезличенными аппаратными спецификациями с базой данных <a href="https://linux-hardware.org/" target="_blank" class="text-emerald-400 hover:underline">linux-hardware.org</a> в рамках лицензии Open Data (CC-BY 4.0). Это помогает разработчикам ядра Linux быстрее находить и исправлять баги в драйверах для вашего железа. Никакая персональная информация третьим лицам не передается.
+            </p>
+        </section>
+
+        <!-- Секция 5 -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+                <span class="text-emerald-400 mono text-sm">05.</span> Ваши права
+            </h2>
+            <p>
+                Вы имеете полное право в любой момент потребовать удаления аппаратного профиля вашего компьютера или вашего аккаунта из нашей базы данных. Для этого достаточно написать нам по адресу <span class="mono text-zinc-300 text-xs bg-zinc-900 px-1.5 py-0.5 rounded">support@lincheck.dev</span> или создать соответствующий запрос (Issue) в нашем официальном GitHub-репозитории.
+            </p>
+        </section>
+
+    </div>
+
+</main>
+
+<!-- Подвал (Footer) -->
+<footer class="border-t border-zinc-900 bg-zinc-950 py-8 text-center text-xs text-zinc-600">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+        <div>
+            © 2026 LinCheck. Все права защищены.
+        </div>
+        <div class="flex items-center space-x-4 text-zinc-500">
+            <a href="privacy.html" class="text-zinc-400 hover:text-emerald-400 transition underline decoration-zinc-800">Политика конфиденциальности</a>
+            <span>Powered by</span>
+            <a href="https://linux-hardware.org/" target="_blank" class="text-zinc-400 hover:text-emerald-400 underline decoration-zinc-700 transition">linux-hardware.org</a>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
