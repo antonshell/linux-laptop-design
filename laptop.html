@@ -5,58 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zenith X1 Pro — Спецификации и аппаратные тесты Linux</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            bg: '#0B0F19',
-                            surface: '#131B2E',
-                            accent: '#10B981',
-                            'accent-hover': '#059669',
-                            border: 'rgba(255, 255, 255, 0.08)',
-                            muted: '#94A3B8'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-brand-bg text-slate-200 font-sans antialiased min-h-screen flex flex-col">
+<body class="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-400">
 
-<!-- === HEADER === -->
-<header class="sticky top-0 z-50 w-full bg-[#0B0F19]/80 backdrop-blur-md border-b border-brand-border">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-            <div class="flex items-center">
-                <a href="#" class="text-base font-bold tracking-tight text-white flex items-center gap-2.5 transition-opacity hover:opacity-90">
-                    <span class="w-2.5 h-2.5 rounded-full bg-brand-accent shadow-[0_0_12px_#10B981]"></span>
-                    <span class="font-mono tracking-wider">LinHardware</span>
-                </a>
-            </div>
-            <nav class="hidden md:flex items-center space-x-1">
-                <a href="#" class="text-brand-muted hover:text-white px-3 py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Каталог платформ</a>
-                <span class="text-brand-border select-none">/</span>
-                <a href="#" class="text-white bg-brand-surface/60 border border-brand-border px-3 py-2 rounded text-xs font-semibold uppercase tracking-wider">Паспорт: Zenith X1 Pro</a>
-                <span class="text-brand-border select-none">/</span>
-                <a href="#" class="text-brand-muted hover:text-white px-3 py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Ядра и патчи</a>
-            </nav>
-            <div class="flex items-center gap-3">
-                <button class="bg-brand-accent/10 hover:bg-brand-accent text-brand-accent hover:text-[#0B0F19] border border-brand-accent/20 hover:border-transparent px-3.5 py-1.5 rounded font-bold text-[11px] tracking-wide uppercase transition-all duration-200">
-                    Создать пробу
-                </button>
-                <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center p-2 rounded text-brand-muted hover:text-white hover:bg-brand-surface border border-brand-border/40 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-                </button>
-            </div>
+<!-- Навигация -->
+<header class="border-b border-zinc-800/80 bg-zinc-950/50 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-black text-lg transition group-hover:bg-emerald-400">L</div>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">LinCheck</span>
+            </a>
         </div>
-    </div>
-    <div id="mobile-menu" class="hidden md:hidden border-t border-brand-border bg-[#0B0F19] px-4 py-4 space-y-2">
-        <a href="#" class="block text-brand-muted hover:text-white py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Каталог платформ</a>
-        <a href="#" class="block text-white bg-brand-surface/80 border border-brand-border/60 px-3 py-2 rounded text-xs font-semibold uppercase tracking-wider">Паспорт: Zenith X1 Pro</a>
-        <a href="#" class="block text-brand-muted hover:text-white py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Ядра и патчи</a>
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-zinc-400">
+            <a href="catalog.html" class="hover:text-emerald-400 transition">Каталог</a>
+            <a href="wizard.html" class="hover:text-emerald-400 transition">Подбор ноутбука</a>
+            <a href="compare.html" class="hover:text-emerald-400 transition">Сравнение</a>
+            <a href="about.html" class="hover:text-emerald-400 transition">О нас</a>
+            <a href="contact.html" class="hover:text-emerald-400 transition">Контакты</a>
+        </nav>
+        <div>
+            <a href="#" class="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm font-medium hover:bg-zinc-800 transition">Создать пробу</a>
+        </div>
     </div>
 </header>
 
@@ -65,20 +35,20 @@
 
     <!-- === 1. НАЗВАНИЕ И ФОТО НОУТБУКА === -->
     <section class="mb-12">
-        <div class="flex items-center gap-2 text-xs text-brand-muted uppercase tracking-wider mb-4">
-            <a href="#" class="hover:text-white">Главная</a> <span>/</span> <span class="text-white">Zenith X1 Pro</span>
+        <div class="flex items-center gap-2 text-xs text-slate-400 uppercase tracking-wider mb-4">
+            <a href="#" class="hover:text-white transition-colors">Главная</a> <span>/</span> <span class="text-white">Zenith X1 Pro</span>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-brand-surface border border-brand-border rounded p-6 md:p-8 relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#131B2E] border border-white/10 rounded p-6 md:p-8 relative overflow-hidden">
             <div class="lg:col-span-7">
-                <div class="inline-flex items-center gap-2 bg-brand-accent/10 text-brand-accent text-[11px] font-bold px-3 py-1 rounded border border-brand-accent/20 tracking-wider uppercase mb-4">
+                <div class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 text-[11px] font-bold px-3 py-1 rounded border border-emerald-500/20 tracking-wider uppercase mb-4">
                     Аппаратный паспорт устройства
                 </div>
                 <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">Ноутбук Zenith X1 Pro</h1>
-                <p class="text-brand-muted text-sm md:text-base leading-relaxed max-w-2xl">
+                <p class="text-slate-400 text-sm md:text-base leading-relaxed max-w-2xl">
                     Высокопроизводительная инженерная станция. Архитектурные особенности ревизии оптимизированы под Unix-подобные среды, обеспечивая низкие задержки при распределении прерываний ACPI и нативную поддержку контроллеров шины.
                 </p>
             </div>
-            <div class="lg:col-span-5 flex justify-center items-center bg-[#0B0F19]/60 border border-brand-border rounded p-4 h-64 overflow-hidden relative group">
+            <div class="lg:col-span-5 flex justify-center items-center bg-[#0B0F19]/60 border border-white/10 rounded p-4 h-64 overflow-hidden relative group">
                 <svg class="w-full max-w-[240px] opacity-80" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="30" y="20" width="140" height="84" rx="4" stroke="#475569" stroke-width="2" fill="#0B0F19"/>
                     <line x1="16" y1="105" x2="184" y2="105" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
@@ -93,35 +63,35 @@
     <!-- === 2. СПИСОК ХАРАКТЕРИСТИК === -->
     <section class="mb-12">
         <h2 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Технические характеристики
+            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Технические характеристики
         </h2>
-        <div class="bg-brand-surface border border-brand-border rounded overflow-hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 text-xs md:text-sm divide-y md:divide-y-0 md:divide-x divide-brand-border/60">
-                <div class="divide-y divide-brand-border/40">
-                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
-                        <span class="text-brand-muted font-medium">Процессор</span>
+        <div class="bg-[#131B2E] border border-white/10 rounded overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 text-xs md:text-sm divide-y md:divide-y-0 md:divide-x divide-white/10">
+                <div class="divide-y divide-white/5">
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01] transition-colors">
+                        <span class="text-slate-400 font-medium">Процессор</span>
                         <span class="col-span-2 text-white font-semibold">AMD Ryzen 9 8945HS (8 ядер / 16 потоков)</span>
                     </div>
-                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
-                        <span class="text-brand-muted font-medium">Графика</span>
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01] transition-colors">
+                        <span class="text-slate-400 font-medium">Графика</span>
                         <span class="col-span-2 text-white">AMD Radeon 780M (RDNA 3)</span>
                     </div>
-                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
-                        <span class="text-brand-muted font-medium">ОЗУ</span>
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01] transition-colors">
+                        <span class="text-slate-400 font-medium">ОЗУ</span>
                         <span class="col-span-2 text-white">32 GB LPDDR5X 7500 MHz</span>
                     </div>
                 </div>
-                <div class="divide-y divide-brand-border/40">
-                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
-                        <span class="text-brand-muted font-medium">Дисплей</span>
+                <div class="divide-y divide-white/5">
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01] transition-colors">
+                        <span class="text-slate-400 font-medium">Дисплей</span>
                         <span class="col-span-2 text-white">16" IPS, 2560x1600 (16:10), 165Hz</span>
                     </div>
-                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
-                        <span class="text-brand-muted font-medium">Накопитель</span>
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01] transition-colors">
+                        <span class="text-slate-400 font-medium">Накопитель</span>
                         <span class="col-span-2 text-white">1TB NVMe PCIe 4.0 x4</span>
                     </div>
-                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01]">
-                        <span class="text-brand-muted font-medium">Интерфейсы</span>
+                    <div class="grid grid-cols-3 p-4 hover:bg-white/[0.01] transition-colors">
+                        <span class="text-slate-400 font-medium">Интерфейсы</span>
                         <span class="col-span-2 text-white">2x USB4 (40Gbps), Wi-Fi 7 MediaTek</span>
                     </div>
                 </div>
@@ -132,33 +102,33 @@
     <!-- === 3. СВОДНАЯ ИНФОРМАЦИЯ О СОВМЕСТИМОСТИ === -->
     <section class="mb-12">
         <h2 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Сводная совместимость подсистем
+            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Сводная совместимость подсистем
         </h2>
-        <div class="bg-brand-surface border border-brand-border rounded overflow-hidden">
+        <div class="bg-[#131B2E] border border-white/10 rounded overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs md:text-sm">
                     <thead>
-                    <tr class="bg-[#0B0F19]/40 border-b border-brand-border text-brand-muted font-semibold uppercase tracking-wider text-[11px]">
+                    <tr class="bg-[#0B0F19]/40 border-b border-white/10 text-slate-400 font-semibold uppercase tracking-wider text-[11px]">
                         <th class="p-4 pl-6">Компонент системы</th>
                         <th class="p-4">Модуль / Подсистема ядра</th>
                         <th class="p-4 text-right pr-6">Статус интеграции</th>
                     </tr>
                     </thead>
-                    <tbody class="divide-y divide-brand-border/60">
-                    <tr class="hover:bg-white/[0.01]">
+                    <tbody class="divide-y divide-white/10">
+                    <tr class="hover:bg-white/[0.01] transition-colors">
                         <td class="p-4 pl-6 font-medium text-white">Интерфейс питания и сна</td>
-                        <td class="p-4 text-brand-muted font-mono text-xs">acpi_cpufreq / amd-pstate</td>
-                        <td class="p-4 text-right pr-6 text-brand-accent font-semibold">OOTB (S3/S0ix OK)</td>
+                        <td class="p-4 text-slate-400 font-mono text-xs">acpi_cpufreq / amd-pstate</td>
+                        <td class="p-4 text-right pr-6 text-emerald-400 font-semibold">OOTB (S3/S0ix OK)</td>
                     </tr>
-                    <tr class="hover:bg-white/[0.01]">
+                    <tr class="hover:bg-white/[0.01] transition-colors">
                         <td class="p-4 pl-6 font-medium text-white">Беспроводной стек</td>
-                        <td class="p-4 text-brand-muted font-mono text-xs">mt792x_core (Wi-Fi 7)</td>
-                        <td class="p-4 text-right pr-6 text-brand-accent font-semibold">Стабильно (Kernel 6.11+)</td>
+                        <td class="p-4 text-slate-400 font-mono text-xs">mt792x_core (Wi-Fi 7)</td>
+                        <td class="p-4 text-right pr-6 text-emerald-400 font-semibold">Стабильно (Kernel 6.11+)</td>
                     </tr>
-                    <tr class="hover:bg-white/[0.01]">
+                    <tr class="hover:bg-white/[0.01] transition-colors">
                         <td class="p-4 pl-6 font-medium text-white">Аудиоархитектура</td>
-                        <td class="p-4 text-brand-muted font-mono text-xs">snd_sof_amd_rembrandt</td>
-                        <td class="p-4 text-right pr-6 text-brand-accent font-semibold">Работает (PipeWire)</td>
+                        <td class="p-4 text-slate-400 font-mono text-xs">snd_sof_amd_rembrandt</td>
+                        <td class="p-4 text-right pr-6 text-emerald-400 font-semibold">Работает (PipeWire)</td>
                     </tr>
                     </tbody>
                 </table>
@@ -170,26 +140,26 @@
     <section class="mb-12">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Логи и тесты пользователей (Probes)
+                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Логи и тесты пользователей (Probes)
             </h2>
-            <span class="text-xs bg-[#1E293B] border border-brand-border text-slate-300 font-mono px-2 py-0.5 rounded">Всего: 4</span>
+            <span class="text-xs bg-[#0B0F19] border border-white/10 text-slate-300 font-mono px-2 py-0.5 rounded">Всего: 4</span>
         </div>
 
-        <div class="bg-brand-surface border border-brand-border rounded overflow-hidden">
+        <div class="bg-[#131B2E] border border-white/10 rounded overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs md:text-sm border-collapse">
                     <thead>
-                    <tr class="bg-[#0B0F19]/50 border-b border-brand-border text-brand-muted font-semibold uppercase tracking-wider text-[11px]">
+                    <tr class="bg-[#0B0F19]/50 border-b border-white/10 text-slate-400 font-semibold uppercase tracking-wider text-[11px]">
                         <th class="p-4 pl-6 w-1/3">Идентификатор лога (ID)</th>
                         <th class="p-4 w-1/3">Операционная система</th>
                         <th class="p-4 text-right pr-6 w-1/3">Дата</th>
                     </tr>
                     </thead>
-                    <tbody class="divide-y divide-brand-border/40 font-medium">
+                    <tbody class="divide-y divide-white/5 font-medium">
                     <tr class="hover:bg-white/[0.01] transition-colors">
                         <td class="p-4 pl-6">
                             <div class="flex items-center gap-3">
-                                <a href="#" class="text-brand-accent hover:underline font-mono font-semibold tracking-wide text-sm">69f21e4be</a>
+                                <a href="#" class="text-emerald-400 hover:underline font-mono font-semibold tracking-wide text-sm">69f21e4be</a>
                                 <span class="text-[10px] bg-amber-900/40 text-amber-400 border border-amber-500/20 px-1.5 py-0.5 rounded uppercase font-bold">Flatpak</span>
                             </div>
                         </td>
@@ -199,14 +169,14 @@
                                 <span class="text-slate-200">Kubuntu 24.04 (Kernel 6.8)</span>
                             </div>
                         </td>
-                        <td class="p-4 text-right pr-6 text-brand-muted font-mono text-xs">Янв 03, 2026</td>
+                        <td class="p-4 text-right pr-6 text-slate-400 font-mono text-xs">Янв 03, 2026</td>
                     </tr>
                     <tr class="hover:bg-white/[0.01] transition-colors">
                         <td class="p-4 pl-6">
                             <div class="flex items-center gap-3">
-                                <a href="#" class="text-brand-accent hover:underline font-mono font-semibold tracking-wide text-sm">a435ff1bd6</a>
+                                <a href="#" class="text-emerald-400 hover:underline font-mono font-semibold tracking-wide text-sm">a435ff1bd6</a>
                                 <span class="text-[10px] bg-emerald-900/40 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded uppercase font-bold">Classic</span>
-                                <span class="text-[10px] bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded uppercase font-bold">Rev</span>
+                                <span class="text-[10px] bg-amber-500 text-[#0B0F19] px-1.5 py-0.5 rounded uppercase font-bold">Rev</span>
                             </div>
                         </td>
                         <td class="p-4">
@@ -215,7 +185,7 @@
                                 <span class="text-slate-200">Kubuntu 24.04 (Kernel 6.8)</span>
                             </div>
                         </td>
-                        <td class="p-4 text-right pr-6 text-brand-muted font-mono text-xs">Янв 02, 2026</td>
+                        <td class="p-4 text-right pr-6 text-slate-400 font-mono text-xs">Янв 02, 2026</td>
                     </tr>
                     </tbody>
                 </table>
@@ -223,9 +193,9 @@
         </div>
     </section>
 
-    <!-- === 5. ОТЗЫВЫ ПОЛЬЗОВАТЕЛЕЙ (С РЕЙТИНГОМ) === -->
-    <section class="bg-brand-surface border border-brand-border rounded p-6">
-        <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-6 pb-4 border-b border-brand-border">Экспертные отзывы</h3>
+    <!-- === 5. ОТЗЫВЫ ПОЛЬЗОВАТЕЛЕЙ === -->
+    <section class="bg-[#131B2E] border border-white/10 rounded p-6">
+        <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-6 pb-4 border-b border-white/10">Экспертные отзывы</h3>
 
         <div class="space-y-6">
             <!-- Отзыв 1 -->
@@ -233,10 +203,10 @@
                 <div class="flex items-center justify-between mb-1">
                     <div class="flex items-center gap-2 text-xs">
                         <span class="font-bold text-white">dev_architect_99</span>
-                        <span class="text-brand-muted">• Вчера, 18:24</span>
+                        <span class="text-slate-400">• Вчера, 18:24</span>
                     </div>
-                    <!-- Рейтинг звездами -->
                     <div class="flex items-center gap-0.5 text-amber-400">
+                        <!-- Повторяющийся SVG звезды для краткости опущен в коде, но структуры идентичны -->
                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -250,11 +220,11 @@
             </div>
 
             <!-- Отзыв 2 -->
-            <div class="pt-4 border-t border-brand-border/40">
+            <div class="pt-4 border-t border-white/5">
                 <div class="flex items-center justify-between mb-1">
                     <div class="flex items-center gap-2 text-xs">
                         <span class="font-bold text-white">sys_admin_nix</span>
-                        <span class="text-brand-muted">• 3 дня назад</span>
+                        <span class="text-slate-400">• 3 дня назад</span>
                     </div>
                     <div class="flex items-center gap-0.5 text-amber-400">
                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -270,13 +240,13 @@
             </div>
         </div>
 
-        <!-- Форма добавления отзыва с интерактивным выбором рейтинга -->
-        <form class="mt-8 pt-6 border-t border-brand-border" onsubmit="event.preventDefault();">
+        <!-- Форма добавления отзыва -->
+        <form class="mt-8 pt-6 border-t border-white/10" onsubmit="event.preventDefault();">
             <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Оставить отзыв</h4>
 
             <!-- Интерактивные звезды -->
             <div class="flex items-center gap-1.5 mb-4">
-                <span class="text-xs text-brand-muted mr-1">Ваша оценка:</span>
+                <span class="text-xs text-slate-400 mr-1">Ваша оценка:</span>
                 <div class="flex items-center gap-1" id="star-rating-container">
                     <button type="button" class="star-btn text-slate-600 hover:text-amber-400 transition-colors" data-value="1">
                         <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -296,19 +266,29 @@
                 </div>
             </div>
 
-            <textarea class="w-full min-h-[100px] p-4 bg-[#0B0F19]/40 border border-brand-border text-slate-200 rounded focus:outline-none focus:border-brand-accent/50 text-xs md:text-sm mb-4" placeholder="Напишите комментарий..."></textarea>
-            <button class="bg-[#1E293B] hover:bg-slate-700 text-white border border-brand-border px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Отправить</button>
+            <textarea class="w-full min-h-[100px] p-4 bg-[#0B0F19]/40 border border-white/10 text-slate-200 rounded focus:outline-none focus:border-emerald-500/50 text-xs md:text-sm mb-4 transition-colors placeholder-slate-500" placeholder="Напишите комментарий..."></textarea>
+            <button class="bg-[#131B2E] hover:bg-[#131B2E]/80 text-white border border-white/10 px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider transition-colors">Отправить</button>
         </form>
     </section>
 </main>
 
-<!-- === FOOTER === -->
-<footer class="bg-[#0B0F19] text-brand-muted border-t border-brand-border pt-12 pb-6 text-xs mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <p>© 2026 LinHardware. Лаборатория верификации оборудования.</p>
-        <div class="flex gap-6">
-            <a href="#" class="hover:text-white transition-colors">Спецификация API</a>
-            <a href="#" class="hover:text-white transition-colors">Правила платформы</a>
+<!-- Подвал (Footer) -->
+<footer class="border-t border-zinc-900 bg-zinc-950 py-8 text-center text-xs text-zinc-600">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+        <div>
+            © 2026 LinCheck. Все права защищены.
+        </div>
+        <div class="flex items-center space-x-2 text-zinc-500">
+            <span>Powered by</span>
+            <a href="https://linux-hardware.org/" target="_blank" class="text-zinc-400 hover:text-emerald-400 underline decoration-zinc-700 transition">linux-hardware.org</a>
+            <span>Open Data (CC-BY 4.0)</span>
+        </div>
+        <div class="flex items-center space-x-6">
+            <a href="https://github.com" target="_blank" class="hover:text-zinc-300 transition flex items-center space-x-1">
+                <span>GitHub</span>
+            </a>
+            <a href="privacy.html" class="hover:text-zinc-300 transition">Конфиденциальность</a>
+            <a href="index.html" class="mono hover:text-zinc-300 transition">API</a>
         </div>
     </div>
 </footer>
